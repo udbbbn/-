@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" id="a" v-model="text"> 
+    {{ text }}
+    <!-- <span id="b"></span> -->
+  </div>
+
+  <script>
+    /*var obj = {}
+    Object.defineProperty(obj, 'hello',{
+      set: function (newVal){
+        document.getElementById('a').value = newVal;
+        document.getElementById('b').innerHTML = newVal;
+
+      }
+    });
+    document.addEventListener('keyup', function(e){
+      obj.hello = e.target.value;
+    })
+    *****************极简双向绑定******************
+    */
+
+
+    /* -------------数据监听器--------------- */
+    function observer(obj, vm){
+      Object.keys(obj).forEach(function(key){
+        defineReactive(vm, key, obj[key]);
+      });
+    }
+
+    /* -------------将对象的属性设置访问器--------------- */
+    function defineReactive(obj, key, val){
+
+      var dep = new Dep();
+
+      Object.defineProperty(obj, key, {
+        get: function (){
+          //添加订阅者watcher到主题对象Dep
+          if (Dep.target) {dep.addSub(Dep.target)}
+            return val;
+        },
+        set: function (newVal){
+          if (newVal === val) {return}
+            val = newVal
+          // 作为发布者发出通知
+          dep.notify()
+        }
+      });
+    }
+
+
+    /* -------------数据劫持--------------- */
+    function nodeToFragment(node, vm){
+      var flag = document.createDocumentFragment(); // DocumentFragment对象插入时只会插入其子节点
+      var child;
+
+      while (child = node.firstChild){
+        compile(child, vm)
+        flag.appendChild(child) //劫持node所有子节点
+      }
+
+      return flag;
+    }
+
+    /* -------------解析属性--------------- */
+    function compile(node, vm){
+      var reg = /\{\{(.*)\}\}/;
+      //节点类型为元素
+      if (node.nodeType === 1) {
+       var attr = node.attributes;
+         // 解析属性
+         for (var i = 0; i < attr.length; i++) {
+          if (attr[i].nodeName == 'v-model') {
+            var name = attr[i].nodeValue; // 获取v-model绑定的属性名
+            node.addEventListener('input', function(e){
+              // 给相应的data属性赋值 进而触发该属性的set方法
+              vm[name] = e.target.value;
+            });
+            node.value = vm[name] // 将data的值赋给该node
+            // node.removeAttribute('v-model');
+          }
+        };
+        new Watcher(vm, node, name, 'input')
+      }
+      //节点类型为text
+      if (node.nodeType === 3) {
+        if (reg.test(node.nodeValue)) {
+          var name = RegExp.$1; //获取匹配到的字符串
+          name = name.trim()
+          // node.nodeValue = vm[name] //将data的值赋给该node
+          
+          new Watcher(vm, node, name, 'text');
+        }
+      }
+    }
+
+    /* -------------订阅/发布模式--------------- */
+
+    //订阅者
+    function Watcher(vm, node, name, nodeType){
+      Dep.target = this;
+      this.name = name;
+      this.node = node;
+      this.vm = vm;
+      this.nodeType = nodeType;
+      this.update();
+      Dep.target = null;
+    }
+    Watcher.prototype = {
+      update: function(){
+        this.get();
+        if (this.nodeType == 'text') {
+          this.node.nodeValue = this.value;
+        }
+        if (this.nodeType == 'input') {
+          this.node.value = this.value;
+        }
+      },
+      // 获取data中的属性值
+      get: function(){
+        this.value = this.vm[this.name]; // 触发相应属性的get
+      }
+    }
+
+    // 一个主题对象
+    function Dep(){
+      this.subs = [];
+    }
+
+    Dep.prototype = {
+      addSub: function(sub) {
+        this.subs.push(sub);
+      },
+      notify: function() {
+        this.subs.forEach(function(sub) {
+          sub.update();
+        });
+      }
+    };
+
+
+
+    /* -------------构造器--------------- */
+    function Vue(options){
+      this.data = options.data;
+      var data = this.data;
+
+      observer(data, this);
+
+      var id = options.el;
+      var dom = nodeToFragment(document.getElementById(id), this);
+
+      document.getElementById(id).appendChild(dom);// 返回到app中
+    }
+
+    var vm = new Vue({
+      el: 'app',
+      data: {
+        text: 'Hello world'
+      }
+    })
+    
+    // 发布者发布信息 主题对象执行notify方法 进而触发订阅者执行update方法
+    // var dep = new Dep()
+    // pub.publish();
+
+  </script>
+</body>
+</html>

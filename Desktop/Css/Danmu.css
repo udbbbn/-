@@ -1,0 +1,68 @@
+*{margin:0;padding: 0;font-size: 16px;width: 100%;height: 100%;font-family: 'Microsoft YaHei'}
+input{border:0px;outline: 0px;}
+video::-webkit-media-controls-enclosure {
+    /*禁用播放器控制栏的样式*/
+   	display: none !important;
+}
+
+
+.Content{width: 980px;margin: 0 auto;box-shadow: #ddd 0 0 5px;height: 573px;background-color: #e5e9ef;white-space: nowrap;font-size: 0px;position: relative;}
+/*播放器*/
+.Content_L{width: 680px;height: calc(100% - 30px);display: inline-block;background-color: #000;vertical-align: top;position: re
+}
+.Content_L_T{width: 100%;height: 100%;position: relative;overflow: hidden;}
+.Content_L_T span{position: absolute;top: 10px;left: 20px;display: block;color: #336688;padding: 10px;width: auto;height: auto;}
+.danmu{position: absolute;top: 0;left: 0;}
+.Content_L_B{width: 100%;height: 30px;box-sizing: border-box;border-top: 1px solid #e2e2e2;border-bottom: 1px solid #e2e2e2;background-color: #fff;}
+.Content_L_B > div{display: inline-block;vertical-align: top;}
+/*播放器功能按钮*/
+.play_button{width: 40px;display: inline-block;text-align: center;height: 28px;line-height: 33px;cursor: pointer;}
+.play_button i{background: url(../Image/Icon.png);background-position:-68px 0;width:19px;height:18px;display: inherit;}
+.play_button:hover{background-color: #efefef}
+.play_progress{width: 360px;padding: 0 3px;height: 28px;position: relative;line-height: 28px;}
+.play_progress_buf{height: 6px;line-height: 6px;background: #e5e9ef;display: inline-block;vertical-align: middle;}
+.play_progress_but{width: 14px;height: 14px;position: absolute;left: 0;border-radius: 7px;top: 9px;box-shadow: 0 0 5px #017cc3;background: #fff;cursor: pointer;}
+.play_time{width: 84px;height: 100%;line-height: 28px;}
+.play_time span{font-size: 12px;color: #99a2aa}
+.play_volume{width: 30px;text-align: center;position: relative;}
+.play_volume i{width:17px;height:18px;background-image: url(../Image/Icon.png);background-position:0px 0px;vertical-align: middle;display: inline-block;cursor: pointer;}
+.play_volume:hover{background-color: #efefef}
+.play_volume:hover .play_volume_chose{display: block;}
+.play_volume_chose{width: 35px;position: absolute;background-color: #fff;border-radius: 4px 4px 0 0;height: 100px;top: -101px;left: -2px;display: none;}
+.play_volume_chose span{color: #99a2aa;width: 100%;height: 28px;line-height: 28px;font-size: 12px;margin-bottom: 2px;}
+.play_volume_silder{width: 30px;margin: 0 auto;height: 60px;position: relative;}
+.play_volume_silder_btn{left: 8px;top: -2px;}
+.play_volume_silder_buf{width: 6px;margin: 0 auto;background: #00a1d6}
+.play_widescreen{width: 32px;display: inline-block;text-align: center;height: 28px;line-height: 33px;cursor: pointer;}
+.play_widescreen i{background: url(../Image/Icon.png);background-position:-88px 0;width:22px;height:18px;display: inherit;}
+.play_widescreen:hover{background-color: #efefef}
+.play_repeat{width: 32px;display: inline-block;text-align: center;height: 28px;line-height: 33px;cursor: pointer;}
+.play_repeat i{background: url(../Image/Icon.png);background-position:-153px 0;width:15px;height:18px;display: inherit;}
+.play_repeat:hover{background-color: #efefef}
+.play_danmu{width: 32px;display: inline-block;text-align: center;height: 28px;line-height: 33px;cursor: pointer;}
+.play_danmu i{background: url(../Image/Icon.png);background-position:-131px 0;width:20px;height:18px;display: inherit;}
+.play_danmu:hover{background-color: #efefef}
+.play_maxscreen{width: 32px;display: inline-block;text-align: center;height: 28px;line-height: 33px;cursor: pointer;}
+.play_maxscreen i{background: url(../Image/Icon.png);background-position:-170px 0;width:18px;height:18px;display: inherit;}
+.play_maxscreen:hover{background-color: #efefef}
+
+
+/*弹幕栏*/
+.Content_R{width: 300px; height: 100%;border-left: 1px solid #e2e2e2; box-sizing: border-box;display: inline-block;background-color: #fff;}
+.Content_R_T{width: 100%;height: 60px;border-bottom: 1px solid #e2e2e2;box-sizing: border-box;line-height:60px;}
+.Content_R_T  p{color: #99a2aa;font-size: 12px;text-indent: 20px}
+.Content_R_T span{font-size: 13px;color: #000;margin-right: 5px;}
+.Content_R_B{height: calc(100% - 60px);width: 100%;}
+.Content_R_title{line-height: 28px;height: 28px;color: #99a2aa;}
+.Content_R_B p{display: inline-block;width: auto;font-size: 13px;width: 35px;color: #99a2aa}
+.Content_R_B p:first-child{margin-left: 15px;margin-right: 15px}
+.Content_R_B p:nth-child(2){width: 130px;text-align: left;}
+.Content_R_B p:last-child{margin:0 5px;}
+.Content_R_B ul{width: 100%;height: calc(100% - 27px);overflow-x: hidden;overflow-y: scroll;}
+.Content_R_B ul li{width:100%;line-height: 24px;height: 24px;font-size: 12px;}
+.Content_R_B ul li p:nth-child(2){text-overflow:ellipsis; overflow: hidden;vertical-align:top}
+
+/*发送弹幕*/
+.Wrap{width:520px;height: 30px;position: absolute;left: 7%;bottom: -10%;}
+.Send{width:420px;height: 30px;background-color: #f1f0f0;border-radius: 3px;border: 1px solid #e2e2e2;text-indent:10px;font-size: 13px}
+input[type=button]{width: 75px;vertical-align: top;color: #464242;height: 32px;font-size: 13px;border: 1px solid #bbbbbb;border-radius: 3px;margin-left: 10px;cursor: pointer;}

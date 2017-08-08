@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>弹幕</title>
+	<link rel="stylesheet" href="../Css/Danmu.Css">
+	<script src="http://code.jquery.com/jquery-1.4.1.js"></script>
+</head>
+<body>
+	<div class="Content">
+		<!------播放器------>
+		<div class="Content_L">
+			<div class="Content_L_T">
+				<video id="video" src="../Video/19010556-1.mp4" width="100%" height="100%"></video>
+				<div class="danmu"></div>
+			</div>
+			<div class="Content_L_B">
+				<div class="play_button" title="播放"><i></i></div>
+				<div class="play_progress"> 
+					<div class="play_progress_buf"></div>
+					<div class="play_progress_but"></div>
+				</div>
+					<div class="play_time">
+						<span id="nowTime">00:00</span>
+						<span>/</span>
+						<span id="allTime">05:14</span>
+					</div>
+				<div class="play_volume" title="音量选择">
+					<i></i>
+					<div class="play_volume_chose">
+						<span>100</span>
+						<div class="play_volume_silder">
+							<div class="play_progress_but play_volume_silder_btn"></div>
+							<div class="play_volume_silder_buf"></div>
+						</div>
+					</div>
+				</div>
+				<div class="play_danmu" title="关闭弹幕"><i></i></div>
+				<div class="play_repeat" title="无脑循环"><i></i></div>
+				<div class="play_widescreen" title="宽屏模式"><i></i></div>
+				<div class="play_maxscreen" title="全屏模式"><i></i></div>
+			</div>
+		</div>
+		<!------弹幕栏------>
+		<div class="Content_R">
+			<div class="Content_R_T"><p><span>2</span>条弹幕</p></div>
+			<div class="Content_R_B">
+				<div class="Content_R_title"><p>时间</p><p>弹幕内容</p><p>发送时间</p></div>
+				<ul>
+					<li><p>00:55</p><p>这个up主真的赞！</p><p>07-12 17:52</p></li>
+					<li><p>01:55</p><p>怎么感觉像来到了微博</p><p>07-12 17:52</p></li>
+				</ul>
+			</div>
+		</div>
+		<div class="Wrap"><input type="text" class="Send" placeholder="请输入弹幕~"><input type="button" value="发送" onclick="Send()"></div>
+		
+	</div>
+</body>
+</html>
+	<script src="../Js/Danmu.js"></script>
