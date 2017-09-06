@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>太极阴阳图</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<!-- <link href="index.css" rel="stylesheet"> -->
+<style>
+
+	html,body{
+		background-color: #949494;
+		padding: 0;
+		margin: 0;
+		border: 0;
+	}
+
+	.Contain{
+		width: 0px;
+		height: 300px;
+		border-left: 150px solid #fff;
+		border-right: 150px solid #000;
+		border-radius: 100%;
+		box-shadow: 0 0  20px 0 #333;
+		position: relative;
+		-webkit-animation: ClockWise 3s linear infinite;
+		-o-animation: ClockWise 3s linear infinite;
+		animation: ClockWise 3s linear infinite;
+	}
+
+	@keyframes ClockWise{
+		from{ transform:rotateZ(0deg);}
+		to{transform:rotateZ(360deg);}
+	}
+	@keyframes BClockWise{
+		from{ transform:rotateZ(360deg);}
+		to{transform:rotateZ(0deg);}
+	}
+	.Contain:hover{
+		animation-play-state:paused;
+		-webkit-animation-play-state:paused;
+		-o-animation-play-state:paused;
+	}
+
+	.Yin{
+		width: 150px;
+		height: 150px;
+		border-radius: 100%;
+		background-color: #000;
+		margin: 150px 0 0 -75px;
+		position: absolute;
+	}
+	.Yin:after{
+		margin: 50px 0 0 50px;
+		content:"";
+		width: 50px;
+		height: 50px;
+		border-radius: 100%;
+		background-color: #fff;
+		position: absolute;
+	}
+
+	.Yang{
+		width: 150px;
+		height: 150px;
+		border-radius: 100%;
+		background-color: #fff;
+		margin: 0 0 0 -75px;
+		position: absolute;
+	}
+	.Yang:after{
+		margin: 50px 0 0 50px;
+		content:"";
+		width: 50px;
+		height: 50px;
+		border-radius: 100%;
+		background-color: #000;
+		position: absolute;
+	}
+
+
+</style>
+</head>
+<body>
+    <div class="Contain">
+    	<div class="Yin"></div>
+    	<div class="Yang"></div>
+    </div>
+</body>
+</html>

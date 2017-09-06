@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>3D 立方体</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>
+	html,body{border: 0;padding: 0;margin: 0;}
+	.wrap{
+		position: relative;
+		perspective:1600px;
+	}
+	.container{
+		width: 800px;
+		height: 800px;
+		transform-style:preserve-3d;
+		transform-origin:50% 50% 200px;
+		animation: RotateFrame 30s linear infinite;
+		-webkit-animation: RotateFrame 30s linear infinite;
+	}
+	.slide{
+		width: 400px;
+		height: 400px;
+		position: absolute;
+	}
+	.top{
+		left: 200px;
+		top: -200px;
+		transform:rotateX(-90deg);
+		transform-origin:bottom;
+		background: url(images/58898400_p0.png)0% 0% / 100% 100%;
+	}
+	.bottom{
+		left: 200px;
+		bottom: -200px;
+		transform:rotateX(90deg);
+		transform-origin:top;
+		background: url(images/58916524_p0.jpg)0% 0% / 100% 100%;
+	}
+	.left{
+		left: -200px;
+		top: 200px;
+		transform:rotateY(90deg);
+		transform-origin:right;
+		background: url(images/59035424_p0.png)0% 0% / 100% 100%;
+	}
+	.right{
+		left: 600px;
+		top: 200px;
+		transform:rotateY(-90deg);
+		transform-origin:left;
+		background: url(images/001.jpg)0% 0% / 100% 100%;
+	}
+	.front{
+		left: 200px;
+		top: 200px;
+		transform:translateZ(400px);
+		background: url(images/59053359_p0.jpg)0% 0% / 100% 100%;
+	}
+	.behind{
+		left: 200px;
+		top: 200px;
+		transform:translateZ(0);
+		background: url(images/wl-op-saber-by-wlop-d8tjwa5.jpg)0% 0% / 100% 100%;
+	}
+
+	@keyframes RotateFrame{
+    0% {
+        transform: rotateX(0deg) rotateY(0deg);}
+    10% {
+        transform: rotateX(0deg) rotateY(180deg);}
+    20% {
+        transform: rotateX(-180deg) rotateY(180deg);}
+    30% {
+        transform: rotateX(-360deg) rotateY(180deg);}
+    40% {
+        transform: rotateX(-360deg) rotateY(360deg);}
+    50% {
+        transform: rotateX(-180deg) rotateY(360deg);}
+    60% {
+        transform: rotateX(90deg) rotateY(180deg);}
+    70% {
+        transform: rotateX(0) rotateY(180deg);}
+    80% {
+        transform: rotateX(90deg) rotateY(90deg);}
+    90% {
+        transform: rotateX(90deg) rotateY(0);}
+    100% {
+        transform: rotateX(0) rotateY(0);}
+    }
+</style>
+</head>
+<body>
+    <div class="wrap">
+    	<div class="container">
+    		<div class="slide top"></div>
+    		<div class="slide bottom"></div>
+    		<div class="slide left"></div>
+    		<div class="slide right"></div>
+    		<div class="slide front"></div>
+    		<div class="slide behind"></div>
+    	</div>
+    </div>
+</body>
+</html>

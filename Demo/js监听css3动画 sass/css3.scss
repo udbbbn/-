@@ -1,0 +1,41 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2017-09-04 13:27:44
+ * @version $Id$
+ */
+
+
+@mixin animat($val){
+	@-webkit-keyframes #{$val}{
+		50%{opacity:0;}
+	}
+	@-moz-keyframes #{$val}{
+		50%{opacity:0;}
+	}
+	@-ms-keyframes #{$val}{
+		50%{opacity:0;}
+	}
+	@-o-keyframes #{$val}{
+		50%{opacity:0;}
+	}
+	@keyframes #{$val}{
+		50%{opacity:0;}
+	}
+}
+
+@mixin compatible($val, $res : flash 1s ease 10){
+	-webkit-#{$val}:$res;
+	-moz-#{$val}:$res;
+	-ms-#{$val}:$res;
+	-o-#{$val}:$res;
+	#{$val}:$res;
+}
+.enable{
+	@include compatible(animation);
+	@include animat(flash);
+	width: 100px;
+	height:100px;
+	background-color:#898989
+}

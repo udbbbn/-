@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>css3+鼠标悬停</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>
+	.raindrop {
+    background:center blue;
+    width:50px;
+    height:50px;
+    border-radius: 100%;
+    border-top-left-radius: 0;
+    position: absolute;
+    margin: auto;    
+    left: 75px;
+    top: 75px;
+    animation: ccircle 5s infinite linear;
+    -webkit-animation: ccircle 5s infinite linear;
+}
+
+.raindrop:hover {
+    animation: none;
+    -webkit-animation: none;
+    
+}
+
+.axis {
+    width: 200px;
+    height: 200px;
+    transform: scaleX(2);
+    background-color: none;
+    border: 1px solid black;
+    left: 150px;
+    position: absolute;
+    top: 50px;
+    border-radius: 50%;
+}
+.rotate {
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    animation: circle 5s infinite linear;
+    -webkit-animation: circle 5s infinite linear;
+    transform-origin: 50% 50%;
+    -webkit-transform-origin: 50% 50%;
+    position: absolute;
+}
+.counterrotate {
+    width: 50px;
+    height: 50px;
+    animation: ccircle 5s infinite linear;
+    -webkit-animation: ccircle 5s infinite linear;
+}
+.planet {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    border-radius : 50px;
+    left: 0px;
+    top: 0px;
+    background-color: red;
+    display: block;
+}
+@keyframes circle {
+    from {   transform: rotateZ(0deg)    }
+    to {        transform: rotateZ(360deg)    }
+}
+@-webkit-keyframes circle {
+    0% {   -webkit-transform: rotateZ(0deg)    }
+    100% {        -webkit-transform: rotateZ(360deg)    }
+}
+@keyframes ccircle {
+    from {        transform: rotateZ(360deg)    }
+    to {        transform: rotateZ(0deg)    }
+}
+@-webkit-keyframes ccircle {
+    from { -webkit-transform: rotateZ(360deg) }
+    to   { -webkit-transform: rotateZ(0deg)   }
+}
+</style>
+</head>
+<body>
+	蓝球、红球往左转 整个div往右转 速度一致 看起来红球跟篮球就禁止了
+    <div class="axis">
+    <div class="rotate">
+        <div class="raindrop" id="center"></div>
+        <div class="counterrotate">
+            <div class="planet" id="circle">A</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2017-09-04 13:27:44
+ * @version $Id$
+ */
+.enable {
+  -webkit-animation: flash 1s ease 10;
+  -moz-animation: flash 1s ease 10;
+  -ms-animation: flash 1s ease 10;
+  -o-animation: flash 1s ease 10;
+  animation: flash 1s ease 10;
+  width: 100px;
+  height: 100px;
+  background-color: #898989; }
+@-webkit-keyframes flash {
+  50% {
+    opacity: 0; } }
+@-moz-keyframes flash {
+  50% {
+    opacity: 0; } }
+@-ms-keyframes flash {
+  50% {
+    opacity: 0; } }
+@-o-keyframes flash {
+  50% {
+    opacity: 0; } }
+@keyframes flash {
+  50% {
+    opacity: 0; } }
+
+/*# sourceMappingURL=js-css3.css.map */

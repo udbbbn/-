@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+</head>
+<body>
+	用此方法可以节省大量重复的事件监听，减少浏览器资源消耗
+    <ul id="resources">
+	  <li><a href="http://developer.mozilla.org">MDN</a></li>
+	  <li><a href="http://html5doctor.com">HTML5 Doctor</a></li>
+	  <li><a href="http://html5rocks.com">HTML5 Rocks</a></li>
+	  <li><a href="http://beta.theexpressiveweb.com/">Expressive Web</a></li>
+	  <li><a href="http://creativeJS.com/">CreativeJS</a></li>
+	</ul>
+	具体看代码跟控制台输出结果
+</body>
+</html>
+<script>
+	var res = document.querySelector('#resources');
+
+	res.addEventListener('mouseover', shwoTarget, false);
+
+	function shwoTarget (e) {
+		var target = e.target;
+		if (target.tagName === 'A') {
+			console.log('A link, with the href' + target.href)
+		};
+		if (target.tagName === 'LI') {
+			console.log('A list item')
+		};
+		if (target.tagName === "UL") {
+			console.log('The list itself')
+		};
+	}
+</script>
