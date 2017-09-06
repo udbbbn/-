@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>ie6不支持min-属性问题</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>
+	body{
+		margin: 0;
+		padding: 0;
+	}
+	.box{
+		background-color: #ccc;
+		min-width: 500px;
+		/*_width:expression(document.body.clientWidth<501 ? "500px" :"auto");*/
+	}
+	.min-width-box{
+		width: 500px;
+		font-size: 0;
+	}
+</style>
+</head>
+<body>
+	<p>在ie6下，min- 属性不生效</p>
+    <div class="box">
+    	<div class="min-width-box"></div>
+    		测试内容
+    </div>
+    <p>错误方法：使用ie5-7才支持的 expression()表达式，此方法不符合w3c标准。 经测试，此方法无效。</p>
+    <p>正确方法：在.box的div中嵌套一个指定宽度的div</p>
+    <p>在ie6-7中，div盒子若有div+文字，该div未设置高度的话，那该div的高度会跟文字的大小挂钩。出现此bug可添加属性font-size:0解决bug</p>
+
+    <div style="font-size:20px;"><div style="width:200px;background-color:#ccc"></div>可查看本文字上 灰色的div 得知并未给其设置高度</div>
+</body>
+</html> 

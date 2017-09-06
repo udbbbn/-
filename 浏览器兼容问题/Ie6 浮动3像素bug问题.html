@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Ie6 浮动3像素bug问题</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>
+	body{margin: 0;padding: 0;}
+	.left_box{
+		background-color: #1c86ee;
+		float: left;
+		height: 100px;
+		width: 100px;
+	}
+	.right_box{
+		background-color: #76ee00;
+		height: 100px;
+		width: 200px;
+	}
+</style>
+</head>
+<body>
+    <p>当相邻的两个元素，一个是浮动，一个非浮动，那么在ie6下会产生3像素的bug。</p>
+    <p>ie7修复了这个bug，但是浮动的规则不符合w3c标准</p>
+	<div class="left_box"></div>
+	<div class="right_box"></div>
+	<p>要解决这个兼容性问题，可在right_box元素上添加浮动属性</p>
+	<div class="left_box"></div>
+	<div class="right_box" style="float:left"></div>
+</body>
+</html>

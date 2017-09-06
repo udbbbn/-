@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>ie下浮动产生双倍距离</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>
+	.box{
+		float: left;
+		width: 100px;
+		height: 100px;
+		margin: 0 0 0 100px;
+		background-color: #686868
+	}
+	.wrap{
+		overflow: auto;zoom:1;
+	}
+</style>
+</head>
+<body>
+	<div class="wrap">
+	<p>在ie6下 设置浮动的同时设置margin 会导致margin的值产生双倍距离</p>
+    <div class="box"></div>
+    </div>
+
+    <div class="wrap">
+    <p>解决方法为：添加display:inline</p>
+    <div class="box" style="display:inline"></div>
+    </div>
+</body>
+</html>

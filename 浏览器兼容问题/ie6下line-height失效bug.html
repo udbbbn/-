@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>ie6下line-height失效bug</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>
+	body{margin: 0;padding: 0;border: 0}
+	.wrap{
+		overflow: auto;
+		zoom: 1;
+	}
+	.div{    
+		float: left;
+	    height: 100px;
+	    line-height: 100px;
+	    background-color: #e28989;
+	}
+	.input{
+		padding: 0;border: 0;
+	    vertical-align: middle;
+	    margin: 40px 0
+	};
+	.inputt{
+	    vertical-align: middle;
+	    margin: 40px 0
+	};
+</style>
+</head>
+<body>
+	<p>当容器内文字跟img、input、textarea、select、object等元素想连时，该容器设置的line-height会失效</p>
+    <div class="wrap">
+	    <div class="div">dadadsa 
+	    	<input type="text" value="dasdsad">
+	    </div>
+    </div>
+    <p>对和文字相连的元素添加margin。 	margin:(所设置的line-height-自身高度)/2px 0     vertical-align:middle</p>
+    <div class="wrap">
+	    <div class="div">dadadsa 
+	    	<input type="text" value="dasdsad" class="input">
+	    </div>
+    </div>
+    <p>另外 我还遇到了另一个bug 若设置了上文属性，不设置input的padding、border值为0 下方的div会莫名多出4px。如下</p>
+    
+    <div class="wrap">
+	    <div class="div">dadadsa 
+	    	<input type="text" value="dasdsad" class="inputt">
+	    </div>
+    </div>
+</body>
+</html>

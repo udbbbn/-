@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>IE6下双边距问题</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>
+	body{margin: 0;padding: 0}
+	.box{
+		float: left;
+		margin: 10px;
+		width: 200px;
+		height: 200px;
+		background-color: #696969;
+	}
+	.box1{
+		_display:inline;
+		float: left;
+		margin: 10px;
+		width: 200px;
+		height: 200px;
+		background-color: #696969;
+	}
+	body:after{clear: both;
+    display: block;
+    content: '';}
+</style>
+</head>
+<body>
+	<p>如果一个div盒子设置了margin,并且该div设置了float浮动,那么在ie6下会出现双边距问题。</p>
+    <div style="overflow:auto;zoom:1"><div class="box"></div></div>
+    <br>
+    <p>可添加属性_display:inline 解决问题。
+	_前缀只有ie6能识别 ie7以上版本已修复此bug</p>
+    <div class="box1"></div>
+</body>
+</html>
