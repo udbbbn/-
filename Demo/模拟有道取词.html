@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>模拟有道取词</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+</head>
+<body>
+	<p><b>Hello</b> World</p>
+	<div>这是第二行</div>
+
+
+    <h3>tips: 按住ctrl键，移动鼠标查看效果</h3>
+    <span id="span" style="color:red;">这里是中文区域，不会被识别</span>
+    <p class="">The Editing Task Force can be followed on our mailing list. We track issues in GitHub Issues as well.
+See the Task Force's charter for more information about the group.<span>hello, i am last</span></p>
+    <p>
+        Individual codepoints are written using hexadecimal values that correspond to Unicode character codepoints. Unicode codepoint values must be between 0 and 10FFFF inclusive. Digit values of codepoints are ASCII case-insensitive. For interval ranges, the start and end codepoints must be within the range noted above and the end codepoint must be greater than or equal to the start codepoint.
+</p>
+<p>
+Wildcard ranges specified with ‘?’ that lack an initial digit (e.g. "U+???") are valid and equivalent to a wildcard range with an initial zero digit (e.g. "U+0???" = "U+0000-0FFF"). Wildcard ranges that extend beyond the range of Unicode codepoints are invalid. Because of this, the maximum number of trailing ‘?’ wildcard characters is five, even though the UNICODE-RANGE token accepts six.
+</p>
+<p>
+Within the comma-delimited list of Unicode ranges in a ‘unicode-range’ descriptor declaration, ranges may overlap. The union of these ranges defines the set of codepoints for which the corresponding font may be used. User agents must not download or use the font for codepoints outside this set. User agents may normalize the list of ranges into a list that is different but represents the same set of codepoints.
+    </p>
+</body>
+</html>
+
+<script>
+	var preWord = "",
+	// 判断是否为英文字符串
+	isAlpha = function (str) {
+		return /[a-zA-Z']/.test(str)
+	}
+	// 监听鼠标松开事件
+	document.onmousemove = function (e) {
+		var e = e || window.event;
+		if (!e.ctrlKey) {
+			return true
+		}
+		// 以当前鼠标位置创建空的Range对象
+		var r = document.caretRangeFromPoint(e.clientX, e.clientY);
+		if (!r) {return true};
+		var Px = e.pageX,
+			Py = e.pageY;
+		// 获取当前range对象的起始位置
+		var so = r.startOffset;
+		// 获取当前range对象的结束位置
+		var eo = r.endOffset;
+		// 克隆当前range对象 赋值给tr
+		var tr = r.cloneRange();
+		var text = "";
+
+		// 循环判断并确定range对象的起始位置
+		if (r.startContainer.data) while (so >= 1) {
+		// startContainer返回range对象起始点所在节点
+		// startContainer.data返回range对象起始点所在节点的文本内容
+			tr.setStart(r.startContainer, --so)
+			// 往前查找 移动range对象的起始位置 直到遇到非英文字符
+			text = tr.toString();
+			// 获取当前range对象的字符串表示
+			if (!isAlpha(text.charAt(0))) {
+				tr.setStart(r.startContainer, so+1);
+				// 遇到非英文字符 将range对象的起始点移到后一位正确位置
+				break;
+			};
+		};
+
+        //同上，循环判断并确定Range对象的结束位置
+        if (r.endContainer.data) while (eo < r.endContainer.data.length){
+            tr.setEnd(r.endContainer, ++eo);
+            text = tr.toString();
+            if (!isAlpha(text.charAt(text.length - 1))){
+                tr.setEnd(r.endContainer, eo - 1);
+                break;
+            }
+        }
+
+
+        var word = tr.toString();
+        //获取当前拾取到的英文单词
+        if(!word.length)return;
+        var s = window.getSelection();
+        //创建空Selection对象
+        s.removeAllRanges();
+        //删除其他所有Range对象
+        s.addRange(tr);
+        //将当前Range对象添加到Selection对象
+        if(preWord == word)return;
+        //简单判断当前单词是否已经被选中
+        preWord = word;
+
+        var showDiv = document.getElementById("selectionP");
+        if(showDiv)
+        {
+        		document.body.removeChild(showDiv);
+        }
+        //创建绝对定位的div,将选中单词作为内容展示到当前页面
+        var p = document.createElement("div");
+        p.innerText = word;
+        p.style.position = "absolute";
+        p.style.backgroundColor = '#dedede';
+        p.style.border = '1px solid #aaa';
+        p.style.padding = "10px";
+        p.id = "selectionP";
+        p.style.left = e.pageX+"px";
+        p.style.top = e.pageY+"px";
+        document.body.appendChild(p);
+      }
+
+
+		/* 拖蓝 */
+	function test () {
+		var div = document.querySelector('div');
+		var p = document.querySelector('p');
+		// 获取文本节点hello
+		var Hello = p.firstChild.firstChild;
+		// 获取文本节点 World
+		var World = p.lastChild;
+		// 新建Range对象
+		var range = document.createRange();
+		// 设置range对象的起始节点为hello 起始位置为第2个位置
+		range.setStart(Hello, 2)
+		// 设置range对象的结束节点为hello 结束位置为第3个位置
+		range.setEnd(div.firstChild, 3)
+
+		// 创建新的selection对象
+		var s = window.getSelection();
+		// 删除当前selection对象中的其他range对象ie跟chrome下只允许一个selection对象 跟一个 range对象
+		s.removeAllRanges();
+		// 将当前range对象假如到selection对象中
+		s.addRange(range);
+	}
+</script>

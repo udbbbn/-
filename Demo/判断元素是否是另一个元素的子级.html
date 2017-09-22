@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>判断元素是否是另一个元素的子级</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+</head>
+<body>
+    <div class="qqq">
+    	<ol>
+    		<li>
+    			<span>子级</span>
+    		</li>
+    	</ol>
+    </div>
+</body>
+</html>
+<script>
+	/* 方法一 */
+	function isParent(obj, ojbParent) {
+		while (obj != undefined && obj != null && obj.tagName.toUpperCase() != "BODY") {
+			if (obj == ojbParent) {
+				return true
+			};			
+			obj = obj.parentNode;
+		}
+		return false;
+	}
+	var child = document.querySelector("span");
+	var parent = document.querySelector(".qqq")
+
+	/* 方法二(常用方法 contains)不兼容firefox 但个人实测支持 */
+	console.log(parent.contains(child))
+
+	/* 方法三 firefox compareDocumentPosition*/
+	/*
+	Bits	Number	Meaning
+	000000	  0		元素一致
+	000001	  1		节点在不同的文档（或者一个在文档之外）
+	000010	  2		节点 B 在节点 A 之前
+	000100	  4		节点 A 在节点 B 之前
+	001000	  8		节点 B 包含节点 A
+	010000	  16	节点 A 包含节点 B
+	100000	  32	浏览器的私有使用
+	 */
+	/* 全兼容方法 */
+	var contains = function (root, el) {
+		if (root.compareDocumentPosition) { // firefox
+			return root === el || !!(root.compareDocumentPosition(el) - 19 > 0);
+		};
+		if (root.contains && el.nodeType === 1) {
+			return root.contains(el) &&  root !== el;
+		};
+		while (el = el.parentNode) {
+			if (el === root) {return true};
+		}
+		return false;
+	}
+
+</script>

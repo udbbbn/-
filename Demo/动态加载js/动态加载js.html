@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+<div id="container">
+    <div id="header"></div>
+    <div id="body">
+        <button id="only-button"> hello world</button>
+    </div>
+    <div id="footer"></div>
+</div>
+<p>更多方法查看<a href="https://github.com/letiantian/how-to-load-dynamic-script">https://github.com/letiantian/how-to-load-dynamic-script</a></p>
+</body>
+</html>
+<script>
+/*--------------------方法一---------------------*/
+//本方法具有兼容性问题
+Loader = (function () {
+    var LoadScript = function (url) {
+        var script = document.createElement('script');
+        script.async = false;
+        script.setAttribute('src',url+'?' + 'time='+ Date.parse(new Date()));
+        document.body.appendChild(script);
+    }
+
+    var loadMultiScript = function (url_array) {
+        for (var i = 0; i < url_array.length; i++) {
+            LoadScript(url_array[i])
+        };
+    }
+
+    return {
+        load: loadMultiScript,
+    }
+})()
+    Loader.load([
+        'http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js',
+        'your.js',
+        'my.js'
+        ]);
+</script>
+<script>
+/*--------------------方法二---------------------*/
+//模拟队列
+    Loader2 = (function () {
+        var load_cursor = 0,
+            load_queue;
+
+        var loadFinished = function () {
+            load_cursor++;
+            if (load_cursor < load_queue.length) {
+                loadScript();
+            };
+        }
+
+        function loadError(oError) {
+            console.log('The script ' + oError.target.src + " is not accessible");
+        }
+
+        var loadScript = function () {
+            var url = load_queue[load_cursor],
+                script = document.createElement('script');
+            script.type = 'text/javascript';
+
+            if (script.readyState) { // IE 加载完毕事件
+                script.onreadystatechange = function () {
+                    if (script.readyState == "loaded"||script.readyState == 'complete') {
+                        script.onreadystatechange = null;
+                        loadFinished();
+                    };
+                }
+            }else { // Others  加载完毕事件
+                script.onload = function () {
+                    loadFinished();
+                }
+            };
+
+            script.onerror = loadError;
+
+            script.src = url + '?' + 'time=' + Date.parse(new Date());
+            document.body.appendChild(script);
+        };
+
+        var loadMultiScript = function (url_array) {
+            load_cursor = 0;
+            load_queue = url_array;
+            loadScript();
+        }
+
+        return {
+            load: loadMultiScript
+        }
+    })()
+    Loader2.load([
+        'http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js',
+        'your.js',
+        'my.js'
+        ]);
+</script>
+
+<script>
+/*--------------------方法三---------------------*/
+//在2的基础上并行加载
+//[a,b][c]循环第一个数组 动态加载 判断当前数组是否全部加载完毕 
+//若全部加载完毕 则进入下个数组加载
+Loader3 = (function() {
+
+  var group_queue;      // group list
+  var group_cursor = 0; // current group cursor
+  var current_group_finished = 0;  
+
+
+  var loadFinished = function() {
+    current_group_finished ++;
+    if (current_group_finished == group_queue[group_cursor].length) {
+      next_group();
+      loadGroup();
+    }
+  };
+
+  var next_group = function() {
+    current_group_finished = 0;
+    group_cursor ++;
+  };
+
+  var loadError = function(oError) {
+    console.error("The script " + oError.target.src + " is not accessible.");
+  };
+
+  var loadScript = function(url) {
+    console.log("load "+url);
+    var script = document.createElement('script');
+    script.type = "text/javascript";
+
+    if (script.readyState){  //IE
+        script.onreadystatechange = function() {
+            if (script.readyState == "loaded" ||
+                    script.readyState == "complete") {
+                script.onreadystatechange = null;
+                loadFinished();
+            }
+        };
+    } else {  //Others
+        script.onload = function(){
+            loadFinished();
+        };
+    }
+
+    script.onerror = loadError;
+
+    script.src = url+'?'+'time='+Date.parse(new Date());
+    document.body.appendChild(script);
+  };
+
+  var loadGroup = function() {
+    if (group_cursor >= group_queue.length) 
+      return;
+    current_group_finished = 0;
+    for (var idx=0; idx < group_queue[group_cursor].length; idx++) {
+      loadScript(group_queue[group_cursor][idx]);
+    }
+  };
+
+  var loadMultiGroup = function(url_groups) {
+    group_cursor = 0;
+    group_queue = url_groups;
+    loadGroup();
+  }
+
+  return {
+    load: loadMultiGroup,
+  };
+
+})();  // end Loader
+
+
+//loading
+var jquery = 'http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js',
+    your   = 'your.js',
+    my     = 'my.js'
+;
+Loader3.load([ [jquery, your], [my] ]);
+
+</script>

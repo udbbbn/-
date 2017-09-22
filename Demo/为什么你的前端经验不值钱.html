@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>为什么你的前端经验不值钱</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<script>
+	function fn(n) {
+		// 健壮性检测
+		 
+		// 若为字符串数字
+		if (parType(n, "[object String]")) {
+			n = parseInt(n);
+		};
+		// 若带小数点
+		if (("" + n).indexOf(".")) {n = Math.floor(n)};
+		// 若不存在
+		if (!!!n) {return};
+		// 若不在正确范围 或 非数字
+		if (!!!((1 < n) && (n < 32)) && !!!(parType(n, "[object Number]")) === false) {return};
+
+		var min = 2,
+			max = 32,
+			i = 0;
+		var arr = [];
+
+		function parType (val, type) {
+			return Object.prototype.toString.call(val) === type;
+		}
+
+		function getRand (min, max) {
+			var w = max - min;
+			// 生成0-30整数 再整体加2
+			return Math.floor(Math.random() * (1 + w)) + min;
+		}
+
+		function checkInArr (arr, rnd) {
+			if (arr.indexOf(rnd) === -1) {
+				return false
+			}else{
+				return true
+			};
+		}
+
+		for (;i < n; i++) {
+			// 获取随机数
+			var rnd = getRand(min, max);
+			// 检测是否存在
+			if (checkInArr(arr, rnd)) {
+				i--;
+			}else {
+				arr.push(rnd)
+			};
+		};
+		return arr;
+	}
+</script>
+</head>
+<body>
+    <a href="https://zhuanlan.zhihu.com/p/25595871">文章链接</a> 
+    <a href="https://mp.weixin.qq.com/s?__biz=MzA3MDMyMzk0NA==&mid=2650814545&idx=1&sn=1639039d88b245c793194dce79bb73ea&chksm=84ca03d6b3bd8ac08a15f5c3e7b0a6d6d3b734504c6b0838ece4917b74d1024766479cf3726c&scene=0&key=6c88b2e82c819b6845e642e63461b7b7b32727c89b0763980dfe74069c0c37cef7da57ffad368c5f05bd2dfeea9de10d96ce35f114cb0eb66f2a4f8997082b7ee8b95288d3b09540d02c590d6c8cc188&ascene=0&uin=NTIyOTA5MjIw&devicetype=iMac+MacBookPro11%2C1+OSX+OSX+10.12.3+build(16D32)&version=12010310&nettype=WIFI&fontScale=100&pass_ticket=CwuZqZq0OfzRlm9K2xrNX9xXRQM8a%2Fu183AWLr1dpZ8S3Jbnt2MF4YkLgNuHWYZh">文章链接</a> 
+</body>
+</html>

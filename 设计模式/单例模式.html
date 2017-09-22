@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>单例模式</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+</head>
+<body>
+    <p>通过单例模式 实现一个静态实例</p>
+</body>
+</html>
+<script>
+	var Model = (function () {
+		var instance;
+		function init (name, age) {
+			this.name = name;
+			this.age = age;
+			instance = this;
+		}
+
+		function getInstance(name, age) {
+			if (!instance) {
+				new init(name, age);
+			};
+			return instance;
+		}
+
+		return {
+			get: getInstance
+		}
+	})();
+	Model.get('英雄', 18)
+</script>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>函数节流</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>
+	body{height: 9000px;width: 100%;}
+</style>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+	// window.onscroll = function () {
+	// 	// lazyLoad();
+	// 	// debounce(lazyLoad);
+	// }
+
+	window.onscroll = debounce2(lazyLoad, 100)
+
+	function lazyLoad () {
+		console.log('scroll执行了');
+	}
+	// 原意只是让scroll方法执行一次 却发现执行了11次
+	// 解决方法如下
+	function debounce (method, context) {
+		clearTimeout(method.timeout);
+		method.timeout = setTimeout(function () {
+			method();
+		}, 100);
+	}
+	/*	方法二 闭包	 */
+	function debounce2 (method, delay) {
+		var timer = null;
+		return function () {
+			var context = this, args = arguments;
+			clearTimeout(timer);
+			timer = setTimeout(function () {
+				method.apply(context, args);
+			}, delay)
+		};
+	}
+	// 以上方法对拖动不适用 在拖动中使用 移动途中元素不会动 结束移动了才会出现到鼠标位置 同理 onresize方法也是一样
+	// 以下是解决方法
+	var throttle = function (fn, delay, mustRunDelay) {
+		var timer = null,
+			t_start;
+		return function () {
+			var context = this, args = arguments, t_end = +new Date(); // + 号转换为number型
+			clearTimeout(timer);
+			if (!t_start) {
+				t_start = t_end;
+			};
+			if (t_end - t_start >= mustRunDelay) {
+				fn.apply(context, args);
+				t_start = t_end;
+			}else {
+				timer = setTimeout(function () {
+					fn.apply(context, args);
+				}, delay)
+			};
+		}
+	}
+	window.onresize = throttle(lazyLoad, 100, 10000)
+</script>

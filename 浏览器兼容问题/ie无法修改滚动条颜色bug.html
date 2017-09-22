@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>ie修改滚动条颜色</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>
+	html,body{
+		height: 1000px;
+		overflow: auto;
+		scrollbar-face-color:#f6f6f6; 
+		scrollbar-highlight-color:#fff; 
+		scrollbar-shadow-color:#eeeeee; 
+		scrollbar-3dlight-color:#eeeeee; 
+		scrollbar-arrow-color:#000; 
+		scrollbar-track-color:#fff; 
+		scrollbar-darkshadow-color:#fff; 
+	}
+
+		/* 设置滚动条的样式 */
+	::-webkit-scrollbar {
+	    width: 12px;
+	}
+
+	/* 滚动槽 */
+	::-webkit-scrollbar-track {
+	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	    border-radius: 10px;
+	}
+
+	/* 滚动条滑块 */
+	::-webkit-scrollbar-thumb {
+	    border-radius: 10px;
+	    background: rgba(0,0,0,0.1);
+	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+	}
+	::-webkit-scrollbar-thumb:window-inactive {
+	    background: rgba(255,0,0,0.4);
+	}
+</style>
+</head>
+<body>
+    <div>
+	/* 设置滚动条的样式 */
+	<p> ::-webkit-scrollbar {
+    	width: 12px;
+	}</p>
+
+/* 滚动槽 */
+<p>::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}</p>
+
+/* 滚动条滑块 */
+<p>::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(0,0,0,0.1);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}</p>
+<p>::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255,0,0,0.4);
+}</p>
+</div>
+    <p>当设置上面的属性时，只能在webkit内核的浏览器生效。那ie要怎么修改呢</p>
+    <p>只要在html,body中设置滚动条属性即可</p>
+    <div>
+		scrollbar-face-color:#f6f6f6; <br>
+		scrollbar-highlight-color:#fff; <br>
+		scrollbar-shadow-color:#eeeeee; <br>
+		scrollbar-3dlight-color:#eeeeee; <br>
+		scrollbar-arrow-color:#000; <br>
+		scrollbar-track-color:#fff; <br>
+		scrollbar-darkshadow-color:#fff; 
+    </div>
+    <p>firefox似乎只允许主题修改滚动条，若一定要修改也行。可通过<b>布局方式</b>模拟滚动条</p>
+</body>
+</html>
