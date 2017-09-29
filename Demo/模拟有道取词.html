@@ -62,7 +62,7 @@ Within the comma-delimited list of Unicode ranges in a ‘unicode-range’ descr
 			// 往前查找 移动range对象的起始位置 直到遇到非英文字符
 			text = tr.toString();
 			// 获取当前range对象的字符串表示
-			if (!isAlpha(text.charAt(0))) {
+			if (!isAlpha(text.charAt(0))) {// 获取selection对象中的range对象 0为索引
 				tr.setStart(r.startContainer, so+1);
 				// 遇到非英文字符 将range对象的起始点移到后一位正确位置
 				break;

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>js数组模拟堆栈与队列</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+</head>
+<body>
+    <p>效率不可跟array相比</p>
+</body>
+</html>
+<script>
+	function Stack() {
+	}
+	Stack.prototype = {
+		add: function (el, pt) {
+			this._first = pt = {//_first是不断变的
+				_next: this._first,
+				el: el
+			}
+			if (pt._next) {
+				pt._next._prev = pt;
+			};
+			return this;
+		}
+	}
+
+	var s = new Stack;
+
+	s.add("1").add("2").add("3")
+
+	var pt = s._first;
+	while (pt) {
+		console.log(pt.el);
+		pt = pt._next;
+	}
+
+
+	function Queue () {
+	}
+	Queue.prototype = {
+		add: function (el) {
+			if (this._last) {
+				this._last = this._last._next = {//_last是不断变的
+					el: el,
+					_next: null//设置_last属性表示最后一个元素，并且让新增元素成为它的一个属性值
+				}
+			}else {
+				this._last = this._first = {//我们要设置一个_first属性表示第一个元素
+					el: el,
+					_next: null
+				}
+			};
+			return this;
+		}
+	}
+
+	var q = new Queue
+	q.add("1").add("2").add("3")
+	var pt = q._first;
+	while (pt) {
+	    console.log(pt.el)
+	    pt = pt._next;
+	}
+</script>

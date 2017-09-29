@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>工厂模式</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+</head>
+<body>
+    <p>什么时候使用工厂模式</p>
+    <ul>
+    	<li>对象的构建十分复杂</li>
+    	<li>需要依赖具体环境创建不同实例</li>
+    	<li>处理大量具有相同属性的小对象</li>
+    </ul>
+    <p>什么时候不该用工厂模式</p>
+    <div><b>不滥用运用工厂模式，有时候仅仅只是给代码增加了不必要的复杂度，同时使得测试难以运行下去</b></div>
+</body>
+</html>
+<script>
+	var page = page || {};
+	page.dom = page.dom || {};
+	// 处理文本
+	page.dom.Text = function () {
+		this.insert = function (where) {
+			var txt = document.createTextNode(this.url);
+			where.appendChild(txt);
+		}
+	}
+
+	// 处理链接
+	page.dom.Link = function () {
+		this.insert = function (where) {
+			var link = document.createElement('a');
+			link.href = this.url;
+			link.appendChild(document.createTextNode(this.url));
+			where.appendChild(link);
+		}
+	}
+
+	// 处理图片
+	page.dom.Image = function () {
+		this.insert = function (where) {
+			var im = document.createElement('img');
+			im.src = this.url;
+			where.appendChild(im);
+		}
+	}
+
+	page.dom.factory = function (type) {
+		return new page.dom[type];
+	}
+
+	var link = page.dom.factory('Link');
+	link.url = 'http://www.cnblogs.com';
+	link.insert(document.body);
+
+	var text = page.dom.factory('Text');
+	text.url = 'test now';
+	text.insert(document.body)
+
+	var image = page.dom.factory('Image');
+	image.url = 'https://camo.githubusercontent.com/b8806bd76878881e7f843b0e77643aff26594ecf/687474703a2f2f3773626e62612e636f6d312e7a302e676c622e636c6f7564646e2e636f6d2f6769746875622d6a732d70726f746f747970652e6a7067';
+	image.insert(document.body);
+</script>
