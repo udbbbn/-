@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>仿Google Docs表格插入</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>
+	html,body,div,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,address,img,ins,del,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0}
+	body,button,input,select,textarea{font:12px/1.6 Arial,Tahoma,simsun;color:#333}
+	button,input,select,textarea{margin:0;outline:0}
+	textarea{resize:none}
+	h1,h2,h3,h4,h5,h6{font-size:100%}
+	address,cite,dfn,em,var,i{font-style:normal}
+	blockquote:before,blockquote:after,q:before,q:after{content:''}
+	table{border-spacing:0;border-collapse:collapse}
+	li{list-style:none}
+	section,article,aside,header,footer,nav,dialog,figure{display:block}/*html5*/
+	pre{word-wrap:break-word;font-family:Arial;zoom:1;white-space:pre-wrap}
+	/*public*/
+	a{text-decoration:none;color:#36c}
+	a:hover{text-decoration:underline;color:#FF7000}
+	.clear{clear:both;height:0;overflow:hidden}
+	.clearfix:after{content:"";display:block;height:0;clear:both;visibility:hidden}
+	.clearfix{zoom:1}
+	label input{vertical-align:-2px;*vertical-align:0}
+	.fl{float:left}
+	.fr{float:right}
+	.page_all{width:980px;margin:0 auto}
+	.gray3{color:#333}/*text*/
+	.gray6{color:#666}
+	.gray7{color:#7e7e7e}
+	.gray9{color:#999}
+	.orange,.sublink .orange{color:#ff7000}
+	.green{color:#65C202}
+	.sublink a{color:#3C5891}
+	.m5{margin:5px}/*margin*/
+	.mt5{margin-top:5px}
+	.mr5{margin-right:5px}
+	.mb5{margin-bottom:5px}
+	.ml5{margin-left:5px}
+	.m10{margin:10px}
+	.mt10{margin-top:10px}
+	.mr10{margin-right:10px}
+	.mb10{margin-bottom:10px}
+	.ml10{margin-left:10px}
+	.lh24{line-height:24px}
+
+
+	#insert_table{border-radius:2px;box-shadow:0px 1px 3px rgba(0,0,0,0.1);background:-webkit-linear-gradient(#fafafa, #f4f4f4 40%, #e5e5e5);border:1px solid #aaa;color:#444;padding:3px 12px 3px 12px;margin:60px 100px}
+	#insert_table:hover{box-shadow:0px 1px 3px rgba(0,0,0,0.2);background:#ebebeb -webkit-linear-gradient(#fefefe, #f8f8f8 40%, #e9e9e9);border-color:#999;color: #222}
+	.in_tab_box{border:1px solid #ccc;box-shadow:1px 1px 5px #ddd;background:#fff;padding:5px;display:none;position:absolute}
+	.itb_con{width:100%;height:100%;overflow:hidden;font-size:18px;position:relative;-webkit-transition:all .1s linear;-moz-transition:all .1s linear}
+	.itb_picker_unlight{background:url(veryhuo-unhighlighted.png) repeat}
+	.itb_picker_unlight,.itb_picker_light{position:absolute;top:0;left:0;-webkit-transition:all .1s linear;-moz-transition:all .1s linear}
+	.itb_picker_light{background:url(veryhuo-highlighted.png) repeat}
+	.itb_picker_status{text-align:center;color:#333;font:10pt/1.7 arial}
+	/*other style*/
+	h1{font:26px/3 'microsoft yahei','simhei';color:#000;text-indent:2em;text-shadow:1px 1px 2px #ccc}
+	h3{margin-bottom:10px}	
+	table{margin:0 100px;border:solid #ccc;border-width:1px 0 0 1px}
+	td{border:solid #ccc;border-width:0 1px 1px 0;padding:10px;-webkit-transition:all .15s linear;-moz-transition:all .15s linear}
+	td:hover{background:#eee}
+	[src^="http://link.liehuo.net/images/gaogao/"],.adtext {display:none!important;display:none}
+</style>	
+</head>
+<body>
+	<h1>仿google Docs在线文档的表格插入效果</h1>
+	<button id="insert_table">插入表格</button>
+</body>
+</html>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript"></script>
+
+<script>
+	/*
+	插入表格
+	@btn 选择触发器 jq对象
+	@opt 表格选项 {
+		min: {最小列数,最小行数}
+		max: {最大列数,最大行数}
+		function: 确认选择后回调事件
+	}
+	 */
+	var insertTable = function (btn, opt) {
+		if (!btn) {return};
+		this.btn = btn;
+		this.box = null;// 各个模块
+		this.inBox = null;
+		this.pickUnlight = null;
+		this.pickLight = null;
+		this.status = null;
+		this.minSize = opt.min || [5, 5];// 最小列和最小行
+		this.maxSize = opt.max || [15, 15];// 最大列和最大行
+		this.insert = opt.insert;// 回调
+		this.nowSize = [];// 当前选择尺寸
+		this.isInit = {create:false, handle:false};// 运行标示
+		this.initPosition();
+	}
+
+	insertTable.prototype = {
+		// 弹框初始化
+		init: function () {
+			if (this.isInit.create) {return};
+			this.isInit.create = true;
+			var id = 'in_tab_box_' + ~(Math.ceil(Math.random()*100000) + ~(new Date().getTime())),
+			html = '<div class="in_tab_box" id="'+id+'">';
+			html += 	'<div class="itb_con">';
+			html += 		'<div class="itb_picker_unlight"></div>';
+			html += 		'<div class="itb_picker_light"></div>';
+			html += 	'</div>';
+			html += 	'<div class="itb_picker_status"></div>';
+			html += '</div>';
+			$("body").append(html);
+			//将各个模块添加到this中
+			this.box = $("#"+id);
+			this.inBox = this.box.find(".itb_con");
+			this.pickAll = this.box.find(".itb_picker_all");
+			this.pickUnLight = this.box.find(".itb_picker_unlight");
+			this.pickLight = this.box.find(".itb_picker_light");
+			this.status = this.box.find(".itb_picker_status");
+
+			// 初始化弹框
+			this.setBg(this.minSize[0], 0);
+			this.setBg(this.minSize[1], 1);
+			this.status.text(0+'列 x '+0+'行');
+			
+		},
+
+		// 初始化弹框的位置
+		initPosition: function () {
+			var _this = this,
+				pos,// 弹框显示位置
+				m,// 储存按钮
+				bPos,// 弹框可选区域位置
+				mPos;// 鼠标位置
+			this.btn.click(function () {
+				if (!_this.isInit.create) {_this.init()};// 初始化弹框
+				if (!_this.isInit.handle) {handle();};// 初始化处理事件
+				m = $(this); // 当前点击的按钮
+				if (_this.box.is(":hidden")) {
+					// 获取当前按钮位置
+					pos = {
+						top: m.offset().top,
+						left: m.offset().left + m.outerWidth() + 2
+					}
+					// 设置弹框的位置
+					_this.box.css({
+						"top": pos.top,
+						"left": pos.left
+					}).fadeIn(100);
+					// 记录弹框中可选取位置
+					bPos = {
+						top: _this.inBox.offset().top,
+						left: _this.inBox.offset().left
+					}
+				$(document).bind("click", function () {
+					_this.hide();
+				});
+				}else {
+					_this.hide();
+				};
+				return false
+			});
+
+			// 判断背景位置跟选区位置
+			function handle(){
+				_this.isInit.handle = true;
+				_this.inBox.mousemove(function (e) {
+					// 记录当前鼠标位置
+					mPos = {
+						x: e.clientX,
+						y: e.clientY
+					}
+					//  若鼠标位置不在弹框范围内 不予处理
+					if (mPos.x < bPos.left || mPos.y < bPos.top) {return};
+					_this.nowSize[0] = Math.ceil((mPos.x - bPos.left) / 18); // 列数 18为单个格子的大小
+					_this.nowSize[1] = Math.ceil((mPos.y - bPos.top) / 18); // 行数
+
+					// 处理弹框的行
+					// 若当前位置满足要求 在范围内
+					if (_this.nowSize[0] >= _this.minSize[0] && _this.nowSize[0] < _this.maxSize[0]) {
+						// +1 是为了把弹框宽度增加1em
+						_this.setBg(_this.nowSize[0]+1, 0);
+					}else if (_this.nowSize[0] < _this.minSize[0]) {
+						// 若小于最小范围
+						_this.setBg(_this.minSize[0], 0)
+					}else{
+						// 剩下情况为等于最大范围
+						_this.nowSize[0] = _this.maxSize[0];
+					};
+					// 处理弹框的列
+					if (_this.nowSize[1] >= _this.minSize[1] && _this.nowSize[1] < _this.maxSize[1]) {
+						// +1 是为了把弹框高度增加1em
+						_this.setBg(_this.nowSize[1]+1, 1);
+					}else if (_this.nowSize[1] < _this.minSize[1]) {
+						// 若小于最小范围
+						_this.setBg(_this.minSize[1], 1)
+					}else{
+						// 剩下情况为等于最大范围
+						_this.nowSize[1] = _this.maxSize[1];
+					};
+
+					// 修改选区宽高
+					_this.pickLight.css({
+						"width": _this.nowSize[0] + 'em',
+						'height': _this.nowSize[1] + 'em'
+					})
+
+					_this.status.text(_this.nowSize[0] + '列 x ' + _this.nowSize[1] + '行');
+				})
+				// 单击确认插入表格
+				_this.box.click(function () {
+					// 若当前坐标在范围内
+					if (_this.nowSize[0] > 0 && _this.nowSize[0] <= _this.maxSize[0] && _this.nowSize[1] > 0 && _this.nowSize[1] <= _this.maxSize[1]) {
+						var rows = _this.nowSize[1],// 表示多少行
+							cols = _this.nowSize[0];// 表示多少列
+						try {
+							_this.insert(rows, cols)// 执行回调
+						} catch(e) {
+							console.log(e);
+						}
+					};
+				})
+			}
+		},
+		// 调整背景区域
+		setBg: function (size, t) {
+			if (t == 0) {
+				// 设置宽度
+				this.inBox.width(size + "em");
+				this.pickUnLight.width(size + 'em');
+			}else{
+				// 设置高度 
+				this.inBox.height(size + "em");
+				this.pickUnLight.height(size + "em");
+			};
+		},
+		// 隐藏弹框
+		hide: function () {
+			var _this = this;
+			this.box.fadeOut(100, function () {
+				// 重置弹框宽高
+				_this.setBg(_this.minSize[0], 0);
+				_this.setBg(_this.minSize[1], 1);
+				_this.pickLight.css({
+					"width": '0',
+					"height": '0'
+				})
+			})
+		}
+	}
+
+	// 调用
+	new insertTable($("#insert_table"),{
+		min: [4, 4],
+		max: [20, 20],
+		insert: function (rows, cols) {
+			var html = '<table>';
+			for(var i=0;i<rows;i++){
+				html += '<tr>';
+				for(var j=0;j<cols;j++){
+					html += '<td></td>';
+				}
+				html += '</tr>';
+			}
+			html += '</table>';
+			// 查找类名为 table 的元素并移除  此处为查找到
+			this.btn.siblings("table").remove();
+			this.btn.after(html);// 插入元素到匹配元素的后面
+		}
+	})
+
+</script>
+
+
+
