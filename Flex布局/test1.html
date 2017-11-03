@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>test1</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>
+	.box{
+		display: flex;
+		display: -webkit-flex;
+		background-color: #656565;
+		width: 700px;
+		height: 100px;
+		justify-content:space-around;
+		align-content:center;
+	}
+	.box > div{
+		width: 100px;
+		height: 100px;
+		background-color: #e67d7d;
+		order:0; /* order越小越靠前 */
+		flex-grow:0; /* 放大比例 */
+		flex-shrink:2; /* 缩小比例 */
+		flex-basis:100px;
+		align-self:baseline;
+	}
+</style>
+</head>
+<body>
+    <div class="box">
+    	<div>1</div>
+    	<div style="order:-1;flex-grow:0.6;flex-shrink:0;">2</div>
+    	<div>3</div>
+    	<div>4</div>
+    	<div>5</div>
+    	<div>6</div>
+    </div>
+    <a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html" target="_blank">教程连接</a>
+    
+</body>
+</html>

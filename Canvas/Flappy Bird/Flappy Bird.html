@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Flappy Bird</title>
+<meta name="viewport" content="width=device-width"/>
+<meta name="description" content="">
+<meta name="keywords" content="">
+    <style>
+       body,html{
+           padding:0;
+           margin:0;
+           height:100%;
+           width:100%;
+           backgroung:#f1f1f1;
+           cursor:pointer;
+           overflow: hidden;
+        }
+        canvas{
+            position:relative;
+            z-index:998;
+        }
+        #restart{
+            position:absolute;
+            top:0;left:0;
+            z-index:999;
+            display:none;
+        }
+		margin-top: 1px;
+    </style>
+</head>
+<body>
+    <canvas id="canvas">您的浏览器不支持canvas</canvas>
+    <div id="restart"></div>
+    <script src='index.js'></script>
+</body>
+</html>
