@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>lesson2</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+    !function () {
+    	var canvas = document.getElementById('canvas');
+    	canvas.width  = 1024;
+    	canvas.height = 786;
+
+    	var context = canvas.getContext('2d');
+
+    	context.lineWidth = 5;
+    	context.strokeStyle = "#005588";
+    	// 绘制弧线 圆心坐标 x y 半径 开始弧度值 结束弧度值 顺
+    	context.arc(300, 300, 200, 0,0.5*Math.PI, true);
+    	for (var i = 0; i < 10; i++) {
+    		context.beginPath();
+    		context.arc(50 + i*100, 60, 40, 0, 2*Math.PI*(i+1) / 10);
+    		context.closePath();
+    		context.stroke();
+    	};
+
+    	for (var i = 0; i < 10; i++) {
+    		context.beginPath();
+    		context.arc(50 + i*100, 180, 40, 0, 2*Math.PI*(i+1) / 10);
+    		context.stroke();
+    	};
+
+    	for (var i = 0; i < 10; i++) {
+    		context.beginPath();
+    		context.arc(50 + i*100, 300, 40, 0, 2*Math.PI*(i+1) / 10, true);
+    		context.stroke();
+    	};
+
+    	context.fillStyle = "#005588";
+    	context.lineWidth = 5;
+    	for (var i = 0; i < 10; i++) {
+    		context.beginPath();
+    		context.arc(50 + i*100, 400, 40, 0, 2*Math.PI*(i+1) / 10);
+    		context.closePath()
+    		context.fill()
+    	};
+    }();
+    </script>
+</body>
+</html>

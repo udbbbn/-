@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>demo1</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+    // x坐标 y坐标 半径 需要加的速度 x轴速度 y轴速度
+    let ball = {x:512, y:100, r:20, g:2, vx:-4, vy:0, color:"#005588"}
+    window.onload = function () {
+		var canvas = document.getElementById('canvas');
+    	canvas.width  = 1024;
+    	canvas.height = 786;
+
+    	var context = canvas.getContext('2d');    
+
+    	setInterval(function() {
+			render(context);
+			update();
+		}, 50);
+
+		function update () {
+			ball.x += ball.vx;
+			ball.y += ball.vy;
+			ball.vy += ball.g;
+
+			// 底部碰撞检测
+			if (ball.y >= 768 - ball.r) {
+				ball.y = 768 - ball.r;
+				ball.vy = -ball.vy;
+			};
+
+			// 左侧碰撞检测
+			if (ball.x <= ball.r ) {
+				ball.x = ball.r;
+				ball.vx = - ball.vx;
+			};
+
+			// 顶部碰撞检测
+			if (ball.y <= ball.r) {
+				ball.y = ball.r;
+				ball.vy = -ball.vy;
+			};
+
+			// 右侧碰撞检测
+			if (ball.x >= 1024 - ball.r) {
+				ball.x = 1024 - ball.r;
+				ball.vx = -ball.vx;
+			};
+		}
+
+		function render (cxt) {
+			cxt.clearRect(0, 0, cxt.canvas.width, cxt.canvas.height);
+
+			cxt.fillStyle = ball.color
+			cxt.beginPath();
+			cxt.arc(ball.x, ball.y, ball.r, 0, 2 * Math.PI);
+			cxt.closePath();
+			cxt.fill();
+		}
+    }
+    </script>
+</body>
+</html>

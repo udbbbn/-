@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>css计数器</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>
+	body{
+		counter-reset: section;  
+		/*重置计数器为0*/
+	}
+	h3:before{
+		counter-increment: section;
+		/*增加计数器值*/
+		content: "section " counter(section);
+	}
+</style>
+</head>
+<body>
+    <h3></h3>
+    <h3></h3>
+</body>
+</html>
