@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+</head>
+<body>
+    
+</body>
+</html>
+<script type="text/javascript">
+	 /*
+            我们要满足状态只能三种状态：PENDING,FULFILLED,REJECTED三种状态，且状态只能由PENDING=>FULFILLED,或者PENDING=>REJECTED
+            */
+            var PENDING = 0;
+            var FULFILLED = 1;
+            var REJECTED = 2;
+            /*
+            value状态为执行成功事件的入参，deferreds保存着状态改变之后的需要处理的函数以及promise子节点，构造函数里面应该包含这三个属性的初始化
+             */
+            function Promise(callback) {
+                this.status = PENDING;
+                this.value = null;
+                this.defferd = {};
+                setTimeout(callback.bind(this, this.resolve.bind(this), this.reject.bind(this)), 0);
+            }
+            
+            Promise.prototype = {
+                constructor: Promise,
+                //触发改变promise状态到FULFILLED
+                resolve: function (result) {
+                    this.status = FULFILLED;
+                    this.value = result;
+                    this.done();
+                },
+                //触发改变promise状态到REJECTED
+                reject: function (error) {
+                    this.status = REJECTED;
+                    this.value = error;
+                },
+                //处理defferd
+                handle: function (fn) {
+                    if (!fn) {
+                        return;
+                    }
+                    var value = this.value;
+                    var t = this.status;
+                    var p;
+                    if (t == PENDING) {
+                        this.defferd = fn;
+                    } else {
+                        if (t == FULFILLED && typeof fn.onfulfiled == 'function') {
+                            p = fn.onfulfiled(value);
+                        }
+                        if (t == REJECTED && typeof fn.onrejected == 'function') {
+                            p = fn.onrejected(value);
+                        }
+                    var promise = fn.promise;
+                    if (promise) {
+                        if (p && p.constructor == Promise) {
+                            p.defferd = promise.defferd;
+                        } else {
+                            p = this;
+                            p.defferd = promise.defferd;
+                            this.done();
+                        }
+                    }
+                    }
+                },
+                //触发promise defferd里面需要执行的函数
+                done: function () {
+                    var status = this.status;
+                    if (status == PENDING) {
+                        return;
+                    }
+                    var t = this.defferd;
+                    this.handle(t);
+                },
+                /*储存then函数里面的事件
+                返回promise对象
+                defferd函数当前promise对象里面
+                */
+                then: function (success, fail) {
+                    var o = {
+                        onfulfiled: success,
+                        onrejected: fail
+                    };
+                    o.promise = new this.constructor(function () {
+            
+                    });
+                    this.defferd = o;
+                    return o.promise;
+                }
+            };
+	
+</script>

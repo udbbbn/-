@@ -76,7 +76,7 @@ var viewSize = (function() {
 })()
 
 var canvas = document.getElementById('canvas'), // 获取canvas节点
-	ctx = canvas.getContext('2d'); // 获取画布上下文画图环境 画笔?
+	ctx = canvas.getContext('2d'); // 获取画布上下文画图环境 
 
 
 var img = new Image(); //加载图片

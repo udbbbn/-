@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>缩放图片应用</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>
+	body{
+		background: black;
+	}
+	#canvas{
+		display: block;
+		margin: 0 auto;
+		bottom: 1px solid #aaa;
+	}
+	input[type='range']{
+		display: block;
+		margin: 20px auto;
+		width: 800px;
+	}
+</style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <input type="range" min="0.5" max="3.0" step="0.01" value="0.5" />
+    <script>
+
+	var canvas = document.getElementById('canvas');
+    var slider = document.getElementsByTagName('input')[0];
+    var image = new Image();
+	var context = canvas.getContext('2d');
+
+	window.onload = function () {
+		canvas.width  = 1024;
+    	canvas.height = 700;
+
+    	var scale = slider.value;
+
+    	image.src = "ndmz.jpg";
+    	image.onload = function () {
+    		// context.drawImage(image, 0, 0, canvas.width, canvas.height)
+    		drawImageByScale(scale);
+    	}
+	}
+
+	// 缩放图片
+	function drawImageByScale (scale) {
+		var imageWidth = canvas.width * scale,
+			imageHeight = canvas.height * scale;
+
+		var sx = imageWidth /2 - canvas.width /2,
+			sy = imageHeight /2 - canvas.height /2;
+
+    	context.drawImage(image, sx, sy, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height)
+	}
+
+    </script>
+</body>
+</html>

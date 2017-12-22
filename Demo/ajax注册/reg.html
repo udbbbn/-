@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+</head>
+<style>
+html,
+body {
+    font-family: "微软雅黑";
+    font-size: 15px;
+}
+
+.main {
+    width: 768px;
+    height: 400px;
+    margin: 0 auto;
+    background: #AFDEAF;
+    margin-top: 100px;
+    overflow: hidden;
+}
+
+.main_in {
+    width: 700px;
+    height: 333px;
+    margin: 0 auto;
+    border-radius: 3px;
+    border: 1px solid black;
+    margin-top: 35px;
+}
+
+.title {
+    font-size: 25px;
+    text-align: center;
+    height: 25px;
+    line-height: 25px;
+    margin-top: 12px;
+}
+
+.content {
+    width: 90%;
+    height: 90%;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+
+.font {
+    margin-left: 20px;
+    color: red;
+    font-size: 12px;
+}
+
+.content div {
+    margin: 5px 0;
+}
+
+.button {
+    width: 180px;
+    height: 60px;
+    background: #34B1FB;
+    border-radius: 10px;
+    margin: 20px auto !important;
+    font-size: 20px;
+    line-height: 60px;
+    text-align: center;
+    font-family: "微软雅黑";
+    cursor: pointer;
+}
+
+input {
+    margin-left: 15px;
+}
+</style>
+<script>
+//createcode 验证码
+function createCode() {
+    var seed = new Array(
+        'abcdefghijklmnopqrstuvwxyz',
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+        '0123456789'
+    );
+    var idx, i;
+    var result = '';
+    for (var i = 0; i < 4; i++) {
+        //向下取整（生成随机数[0,3)）
+        idx = Math.floor(Math.random() * 3);
+        result += seed[idx].substr(Math.floor(Math.random() * (seed[idx].length)), 1);
+        //根据随机数获取数据中的一个值
+    }
+    return result;
+}
+//ajax发送数据到php
+function ajax(a) {
+    var xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+    xmlhttp.open("POST", "reg.php");
+    var date = a.name + "=" + a.value;
+    xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xmlhttp.send(date);
+    if (a.name == 'username' || a.name == 'Email') {
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById(a.name).innerHTML = xmlhttp.responseText;
+            }
+        }
+    }
+}
+
+function Sure() {
+    if (pa.value == pas.value) {
+        if (yanzheng.value == yanzhengma.textContent) {
+            var xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+            xmlhttp.open("POST", "reg_.php");
+            var res = document.getElementById("content").getElementsByTagName("div");
+            var a = [];
+            a.name = 'date';
+            for (var i = 0; i < 4; i++) {
+                if (res[i].children[0].value != '') {
+                    a.push(res[i].children[0].value);
+                } else { alert("信息未填完整！"); return; };
+            }
+            var qq = a.name + "=" + a.join();
+            xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xmlhttp.send(qq);
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById("username").innerHTML = xmlhttp.responseText;
+                }
+            }
+        } else { alert("验证码不匹配！"); }
+    } else { alert("密码不一致"); return; }
+}
+</script>
+
+<body>
+    <div class="main">
+        <div class="main_in">
+            <div class="title">注册</div>
+            <div class="content" id="content">
+                <div>请输入用户名：
+                    <input style='margin-left:0px;' type="text" width="200" name="username" onchange="ajax(this);"><span id="username" class="font"></span></div>
+                <div>请选择性别：
+                    <select name="sex" id="sex" onchange="ajax(this);" style="margin-left:10px;">
+                        <option value="男">男</option>
+                        <option value="女" selected="selected">女</option>
+                    </select><span id="" class="font"></span></div>
+                <div>请输入邮箱：
+                    <input type="text" width="200" name="Email" onchange="ajax(this);"><span id="Email" class="font"></span></div>
+                <div>请输入密码：
+                    <input id="pa" type="password" width="200" name="password" onchange="ajax(this);"><span id="pass" class="font"></span></div>
+                <div>请确认密码：
+                    <input id="pas" type="password" width="200"><span id="password" class="font"></span></div>
+                <div>验证码：
+                    <input id="yanzheng" type="text" width="200" style="margin-left: 45px" onclick="yanzhengma.innerHTML = createCode();"><span style="margin-left: 10px" id="yanzhengma"></span></div>
+                <div style="width: 100%;">
+                    <div class="button" onclick="Sure();">确认注册</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>
