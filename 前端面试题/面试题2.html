@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>实现一个半径10px的小球在500px*500px的方块中做直线运动，初始方向随机，速度保持不变，碰撞到墙壁后反弹。</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link href="" rel="stylesheet">
+</head>
+
+<body>
+    <p>实现一个半径10px的小球在500px*500px的方块中做直线运动，初始方向随机，速度保持不变，碰撞到墙壁后反弹。</p>
+    <div style="width: 500px;height: 500px;background: #CEACAC;position: relative;">
+        <div style="width: 10px;height: 10px;background: #7DE6CB;position: absolute;" id="ball"></div>
+    </div>
+</body>
+
+</html>
+<script type="text/javascript">
+function fun(v) {
+    let dire = Math.random() * 4,
+        Vx = Math.random() * v,
+        Vy = Math.sqrt(v * v - Vx * Vx),
+        startX = Math.random() * 500,
+        startY = Math.random() * 500;
+    switch (true) {
+        case dire < 1:
+            Vx = -Vx;
+            break; //左
+        case dire > 3:
+            Vy = -Vy;
+            break; //上
+    }
+    const ball = document.getElementById('ball');
+    ball.style.left += startX + "px";
+    ball.style.top += startY + "px";
+
+    function animate() {
+        if (startX > 490 || startX < 0) {
+            Vx = -Vx;
+        }
+        startX += Vx;
+        if (startY > 490 || startY < 0) {
+            Vy = -Vy;
+        }
+        startY += Vy;
+        ball.style.left = startX + 'px';
+        ball.style.top = startY + 'px';
+        window.requestAnimationFrame(animate)
+    }
+    window.requestAnimationFrame(animate)
+    console.log(dire);
+}
+fun(5);
+</script>
