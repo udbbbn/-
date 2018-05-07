@@ -1,0 +1,48 @@
+ html,body{width:100%;height:100%;margin:0px;padding:0;-webkit-font-smoothing: subpixel-antialiased;min-width: 1303px;}
+ .Content{width: 100%;height:100%;background-color: #110706;overflow-y: scroll;overflow-x: hidden;position: relative;}
+ .ConBack{width:1303px;background: url(../images/index_back.png)100% 100%;margin:0 auto;height: 750px;position: relative;}
+ .Egg{width: 210px;height: 241px;position: absolute;left: 200px;bottom: 250px;background: url(../images/index_egg.png)0% 0% /100% 100%;}
+ .Egg_one{left: 450px;bottom: 220px;}
+ .Egg_two {left: 700px;}
+ .curr{background-image: url(../images/index_boregg.png);}
+ .curr:before{width: 250px;height: 201px;background: url(../images/index_dec.png)0% 0% / 100% 100%;display: block;content: '';position: absolute;bottom: 129px;}
+ .Hammer{width: 83px;height: 87px;position: absolute;left: 370px;top: 235px;background: url(../images/index_Hammer.gif)0% 0% / 100% 100%;display: none;}
+ .Flag{width: 239px;height: 271px;position: absolute;right: 65px;top: 135px;background: url(../images/index_flag.png)0% 0% / 100% 100%;}
+ .Flag_Content{width: 100%;height: 77px;margin-top: 91px;font-size: 18px;color: #fff;line-height: 77px;text-align: center;}
+ .ConBottom{width: 760px;height: auto;position: absolute;bottom: -140px;left: 199px;margin-bottom: 2%}
+ .ConBottom_T{width: 143px;height: 34px;margin:0 auto;background: url(../images/index_text.png)0% 0% / 100% 100%;margin-bottom: 10px;}
+ .ConBottom_B{height: auto;width: 90%;background-color: #25160e;padding: 20px 5%;color: #937f7b;font-size: 15px;margin-bottom: 2%}
+
+/*弹窗*/
+.Wrap{width: 100%;height: 100%;position: absolute;top: 0;left: 0;background-color: #000000;opacity: 0.5;display: none}
+.Alert{width: 278px;height: 236px;position: absolute;left: calc(50% - 139px);top: calc(50% - 118px);background-color: #fff;border-radius: 8px;display: none}
+.Alert_T{background: url(../images/index_alert.png)0% 0% / 100% 100%;width: 244px;height: 120px;margin: 12px auto;position: relative;}
+.Alert_Text{width: 185px;max-height: 50px;font-size: 14px;color: #272424;margin-bottom: 5px;position: absolute;bottom: 0;left: calc(50% - 92.5px);text-align: center;}
+.Alert_Button{width: 85%;height: 35px;text-align: center;font-size: 14px;line-height: 35px;background-color: #1ca9f2;margin: 0 auto;border-radius: 10px;margin-bottom: 10px;color: #fff;cursor: pointer;}
+.Alert_But2{background-color: #f2711c;}
+/*分辨率适配*/
+ @media screen and (min-width: 320px) and (max-width: 415px) {
+ 	html,body{min-width: auto}
+ 	.Content{height: 100%;padding: 0;overflow-y: scroll;}
+ 	.ConBack{width: 100%;background: url(../images/index_back_phone.png)0% 0% / 100% 100%;height: 80%;}
+ 	.ConBottom{width: 100%;left: 0;height: 234px;}
+ 	.ConBottom_B{height: auto;width: 80%;margin:0 auto 2% auto;}
+ 	.Flag{display: none}
+ 	.Egg{width: 25%;height: 22%;left: 2%;bottom: 35%;}
+ 	.curr:before{width: 114%;height: 83%;left: 2%;bottom: 54%;}
+ 	.Egg_one{left: 31.5%;bottom: 31%;}
+	.Egg_two{left: 61.5%}
+	.Hammer{width: 10%;height: 9%;}
+ 	.ConBottom_T{width: 28%;height: 11%}
+ }
+ @media screen and (max-height: 480px) {
+ 	.ConBottom{bottom: -46%!important}
+ 	.Egg{width: 22%;height: 22%;left: 4%;bottom: 35%;}
+ 	.Egg_one{left: 33.5%;bottom: 31%;}
+	.Egg_two{left: 63%}
+ }
+ @media screen and (min-height: 480px) and (max-height: 568px) {
+ 	.ConBottom_T{width: 29%;height: 9%}
+ 	.ConBottom{bottom: -35%}
+ 	.ConBottom_B{font-size: 13px;}
+ }

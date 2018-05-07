@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	 <meta http-equiv="Content-type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="telephone=no" name="format-detection">
+	<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+	<div class="Content">
+		<div class="ConBack">
+					<div class="Flag"><div class="Flag_Content">中奖纪录</div></div>
+					<div class="Hammer"></div>
+					<div class="Egg"></div>
+					<div class="Egg Egg_one"></div>
+					<div class="Egg Egg_two"></div>
+			<div class="ConBottom">
+				<div class="ConBottom_T">
+				</div>
+				<div class="ConBottom_B">这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！这是游戏规则！！！</div>
+			</div>
+		</div>
+		<div class="Wrap"></div>
+		<div class="Alert">
+			<div class="Alert_T">
+				<div class="Alert_Text">获奖内容获奖内容获奖内容
+获奖内容获奖内容获奖内容</div>
+			</div>
+				<div class="Alert_Button" id="but1">再来一局</div>
+				<div class="Alert_Button Alert_But2">不玩了</div>
+		</div>
+	</div>
+</body>
+</html>
+<script src="js/jquery-1.7.2.js"></script>
+<script>
+function Eggclick(_this){
+	var _this = _this;
+	if ($('.curr')[0]) {
+		alert('您已经砸过金蛋了哦~');
+		return false;
+	}
+	//$(".Hammer").css({"top": _this.position().top - 55, "left": _this.position().left + 185});
+	// $(".Hammer").css({"top": _this.position().top - $("body")[0].offsetHeight *0.05, "left": _this.position().left + _this[0].offsetWidth * 0.7});
+	// $(".Hammer").animate({
+	// 	"top": _this.position().top + $("body")[0].offsetHeight *0.04,
+	// 	"left": _this.position().left + $("body")[0].offsetWidth *0.07
+	// }, 100, function(){
+	// 	_this.addClass('curr');
+	// 	$(".Wrap").fadeIn();
+	// 	$(".Alert").fadeIn();
+	// 	$(".Content").css('overflow', 'hidden');
+	// 	$('.Hammer').hide();
+	// })
+	$(".Hammer").show();
+	setTimeout(function(){
+		_this.addClass('curr');
+		$(".Wrap").fadeIn();
+		$(".Alert").fadeIn();
+		$(".Content").css('overflow', 'hidden');
+		$(".Hammer").hide();
+	},300)
+}
+
+$(".Egg").hover(function(){
+	if (!$(".Wrap").is(':hidden')) {return};
+	if ($('.curr')[0]) {return}
+	var posL = $(this).position().left + $(this).width() -  $(this).width() / 3.5;
+	if ($("body")[0].offsetWidth <= 415) {
+		posL = $(this).position().left + $(this).width() -  $(this).width() / 7
+	}
+	$(".Hammer").css('top', 235)//$("body")[0].offsetHeight *0.332
+	if ($("body")[0].offsetWidth <= 415) {
+		$(".Hammer").css('top', $("body")[0].offsetHeight *0.32)//$("body")[0].offsetHeight *0.365
+	};
+	if ($(this).hasClass("Egg Egg_one")) {
+		$(".Hammer").css('top',  260);
+		if ($("body")[0].offsetWidth <= 415) {
+			$(".Hammer").css('top',  $("body")[0].offsetHeight *0.365)
+		}
+	}
+	$(".Hammer").css('left', posL)
+})
+$("#but1").click(function(){
+	$(".Egg").removeClass('curr');
+		$(".Wrap").fadeOut();
+		$(".Alert").fadeOut();
+		$(".Content").css('overflow', 'auto');
+})
+$(".Alert_But2").click(function(){
+		$(".Wrap").fadeOut();
+		$(".Alert").fadeOut();
+		$(".Content").css('overflow', 'auto');
+})
+$(".Egg").click(function(){
+	Eggclick($(this))
+});
+</script>

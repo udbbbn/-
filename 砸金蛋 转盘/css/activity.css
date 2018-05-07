@@ -1,0 +1,30 @@
+*{padding: 0;margin: 0}
+html,body{width:100%;height:100%;margin:0px;padding:0;-webkit-font-smoothing: subpixel-antialiased;min-width: 1250px;background-color: #f6a320;}
+
+.Wrap{width: 100%;height: 45%;background: url(../images/activity_back.png) 0% 0% / 100% 100%;}
+.Wrap_T{width: 60%;height: 100%;background: url(../images/activity_Top.png)0% 0% / 100% 100%;margin: 0 auto}
+.Wrap_B{background-color: #f6a320;width: 100%;height: auto;overflow: hidden;}
+.Wrap_B_Con{width: 850px;height: auto;margin: 0 auto;padding-top: 10px;}
+.Wrap_B_Con_L{width: 335px;height: 357px;margin:0 10px;background: url(../images/activity_left.png) 0% 0% / 100% 100%;position: relative;display: inline-block;}
+.Wrap_B_Con_L_T{font-size: 15px;position: absolute;width: 83%;max-height: 98px;top: 22%;left: 11%;color: #fff;overflow: hidden;text-align: left;}
+.Wrap_B_Con_L_R{width: 350px;height: 350px;display: inline-block;margin: 0 70px;position: relative;float: right;}
+.Rotate_Back{width: 350px;height: 350px;position: absolute;left: 0;top: 0;background: url(../images/activity_rotate.png)0% 0% / 100% 100%;}
+.Rotate_back{width: 635px;height: 100%;position: absolute;left: -70px;top: 0;background: url(../images/activity_rotaback.png)0% 0% / 100% 100%;}
+.Rotate_click{width: 100px;height: 100px;position: absolute;left: 35.5%;top: 35.5%;background: url(../images/activity_click.png)0% 0% / 100% 100%;cursor: pointer;}
+
+@media screen and (min-width: 320px) and (max-width: 415px) {
+	html,body{min-width: auto}
+	.Wrap{background: none;height: 100%}
+	.Wrap_T{background-image: url(../images/activity_Top_phone.png);height: 35%;width: 100%;margin-bottom: -1px}
+	.Wrap_B_Con{width: 100%;text-align: center;}
+	.Wrap_B_Con_L_R{margin:0 0 3% 0;float: none;}
+	.Wrap_B_Con_L{width: 98%;margin: 0 2% 0 0;height: 341px;}
+	.Rotate_click{cursor:none;}
+}
+@media screen and (min-height: 480px) and (max-height: 568px) {
+	.Wrap_B_Con_L{width: 98%;margin: 0 2% 0 0;height: 341px;}
+	.Wrap_B_Con_L_R{width: 300px;height: 300px;}
+	.Rotate_click{width: 85px;height: 85px;top: 36%;}
+	.Wrap_B_Con_L_T{font-size: 14px;width: 270px;}
+	.Rotate_Back{width: 300px;height: 300px;}
+}
