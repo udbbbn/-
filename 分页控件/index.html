@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>分页控件</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div id="box">123
+    </div>
+    <div id="box1"></div>
+</body>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="index.js"></script>
+<script type="text/javascript">
+var box = $("#box")[0];
+var box1 = $("#box1")[0];
+box.onclick = function() {
+/*
+ **  @param {element} el 需要插入分页控件的位置
+ **  @param {number} num 数据的数量
+ **  @param {number} pagenum 一页中数据量的多少
+ **  @param {number} page 显示当前是第几页
+ **  @param {function} cb 回调函数
+ */
+    $.fn.Paging(box1, 101, 8, 1);
+}
+</script>
+
+</html>
