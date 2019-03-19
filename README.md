@@ -21,6 +21,7 @@
 		js 判断元素是否为另个元素子级
 		模拟有道取词 js selection range对象
 		js监听键盘-记录按键时长 
+		美化checkbox radio 以及用css评星
 	浏览器兼容问题
 		Ie6 浮动3像素bug问题	
 		ie6不支持min-属性问题

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* radio */
+        .radioLabel {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 1px solid #eee;
+            display: inline-block;
+            vertical-align: top;
+            box-sizing: border-box;
+        }
+        input[type="radio"]:checked+.radioLabel {
+            padding: 2px;
+            background-clip: content-box;
+            background-color: aqua;
+        }
+        /* checkbox */
+        .checkLabel {
+            width: 18px;
+            height: 18px;
+            line-height: 18px;
+            text-align: center;
+            border-radius: 5px;
+            border: 1px solid #eee;
+            display: inline-block;
+            vertical-align: top;
+            box-sizing: border-box;
+        }
+        input[type="checkbox"]:checked+.checkLabel::after {
+            content: '✓';
+        }
+        /* rating */
+        .rating {
+            display: table;
+        }
+        .rating > label {
+            color: #ddd;
+            float: right; /* 此处的右浮动是理解下面代码的关键 取消属性调试 */
+        }
+        .rating > label::after {
+            padding: 5px;
+            font-size: 24px;
+            display: inline-block;
+            content: "★";
+        }
+        .rating > input:checked ~ label, /* 点击后的label */
+        .rating:not(:checked) > label:hover, /* 没有选中的label的hover */
+        .rating:not(:checked) > label:hover ~ label { /* 没选中的label:hover的之后的label */
+            color: #FFD700;
+        }
+        .rating > input:checked ~ label:hover, /* 点击过的label:hover */
+        .rating > label:hover ~ input:checked ~ label, /* label:hover之后的被选中的input后的label */
+        .rating > input:checked ~ label:hover ~ label { /* 被选中的input后的label:hover后的label */
+            opacity: .5;
+        }
+    </style>
+</head>
+<body>
+    <!-- radio -->
+    <label>
+        <span>选项1</span>
+        <input type="radio" name="test" id="test1" hidden>
+        <label for="test1" class="radioLabel"></label>
+    </label>
+    <label>
+        <span>选项2</span>
+        <input type="radio" name="test" id="test2" hidden>
+        <label for="test2" class="radioLabel"></label>
+    </label>
+    <label>
+        <span>选项3</span>
+        <input type="radio" name="test" id="test3" hidden>
+        <label for="test3" class="radioLabel"></label>
+    </label>
+    <br>
+    <br>
+    <!-- checkbox -->
+    <span>苹果</span>
+    <input type="checkbox" name="checkbox" id="checkbox1" hidden>
+    <label class="checkLabel" for="checkbox1"></label>
+    <span>华为</span>
+    <input type="checkbox" name="checkbox" id="checkbox2" hidden>
+    <label class="checkLabel" for="checkbox2"></label>
+    <span>小米</span>
+    <input type="checkbox" name="checkbox" id="checkbox3" hidden>
+    <label class="checkLabel" for="checkbox3"></label>
+    <br>
+    <br>
+    <!-- rating -->
+    <div class="rating">
+        <input type="radio" name="star" id="star5" value="5" hidden>
+        <label for="star5"></label>
+        <input type="radio" name="star" id="star4" value="4" hidden>
+        <label for="star4"></label>
+        <input type="radio" name="star" id="star3" value="3" hidden>
+        <label for="star3"></label>
+        <input type="radio" name="star" id="star2" value="2" hidden>
+        <label for="star2"></label>
+        <input type="radio" name="star" id="star1" value="1" hidden>
+        <label for="star1"></label>
+    </div>
+</body>
+</html>
