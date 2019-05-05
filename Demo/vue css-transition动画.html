@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        .app {
+            width: 100%;
+            overflow: hiden;
+            position: relative;
+        }
+
+        .app .midle {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: .7rem;
+            height: 0.55rem;
+            border: 1px solid #e66b6b;
+            margin-left: -.04rem;
+            padding: .1rem;
+            z-index: -1;
+        }
+
+        .div {
+            height: 100%;
+            white-space: nowrap;
+            overflow: scroll;
+        }
+
+        .div .child {
+            display: inline-block;
+            width: .7rem;
+            text-align: center;
+            padding: .2rem;
+        }
+
+        .transl {
+            transition: all 1s ease-in-out;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- 没有使用vue-transition -->
+    <div id="app" class="app">
+        <div class="midle"></div>
+        <div class="div">
+            <div @touchmove.prevent ref="wrapper" :class="{transl: transFlag}">
+                <template v-for="(item, index) in arr">
+                    <div class="child" v-on:click="handle(index)" v-bind:key="index">
+                        {{item.d}}
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            // 给初始值 方便首次直接获取元素宽度
+            arr: [{
+                    y: new Date().getFullYear(),
+                    m: ('0' + (new Date().getMonth() + 1)).slice(-2),
+                    d: ('0' + new Date().getDate()).slice(-2)
+                }],
+            // 居中元素的索引
+            middle: 8,
+            childWidth: 0,
+            // 动态添加transition class
+            transFlag: false
+        },
+        methods: {
+            handle(index) {
+                this.transFlag = true
+                const {y, m ,d} = this.arr[index];
+                // 计算偏移量
+                let tranlate = (this.middle - index) * this.childWidth + this.initTransl; // this.initTransl 基础偏移量
+                // 移动结束重刷数据
+                this.$refs.wrapper.addEventListener('transitionend', () => {
+                    this.fillArr(new Date(y,m,d))
+                    this.transFlag = false
+                });
+                this.$refs.wrapper.style.transform = `translate3d(${tranlate}px, 0, 0)`;
+            },
+            getNowDate() {
+                const date = new Date();
+                return {
+                    y: date.getFullYear(),
+                    m: ('0' + (date.getMonth() + 1)).slice(-2),
+                    d: ('0' + date.getDate()).slice(-2)
+                }
+            },
+            fillArr(clickTime = null) {
+                const nowDate = this.getNowDate();
+                const parseTime = Date.parse(clickTime ? clickTime : (new Date(nowDate.y,nowDate.m,nowDate.d)));
+                const oneDay = 60 * 60 * 24 * 1000;
+                let arr = [];
+                // 当前时间 前后各push元素
+                for(let i = 0; i < 9; i++) {
+                    arr.push(this.formatDate(new Date(parseTime + i * oneDay)));
+                }
+                for(let i = 1; i < 9; i++) {
+                    arr.unshift(this.formatDate(new Date(parseTime - i * oneDay)));
+                }
+                this.$refs.wrapper.style.transform = `translate3d(${this.initTransl}px,0,0)`;
+
+
+                this.arr = arr;
+            },
+            formatDate(date) {
+                return {
+                    y: date.getFullYear(),
+                    m: ('0' + date.getMonth()).slice(-2),
+                    d: ('0' + date.getDate()).slice(-2)
+                }
+            },
+            initWidth() {
+                // 单个元素的宽度
+                this.childWidth = this.$refs.wrapper.children[0].offsetWidth;
+                this.initTransl = (-4) * this.childWidth
+                // 初始偏移量
+            }
+        },
+        created() {
+        },
+        mounted() {
+            this.initWidth();
+            this.fillArr();
+        }
+    })
+</script>
