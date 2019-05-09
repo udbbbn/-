@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+
+<script>
+Function.prototype.call = function(ctx) {
+    ctx = ctx || window;
+    ctx.fn = this;
+    let args = [];
+    let length = arguments.length;
+    for(let i = 1; i < length; i++) {
+        // 这里不能直接push 值 
+        // eval字符串拼接时 若值为['a','b']
+        // 转为字符串 直接成了a,b变量
+        // 会报错
+        args.push(`arguments[${i}]`);
+    }
+    let res = eval(`ctx.fn(${args})`);
+    delete ctx.fn;
+    return res
+}
+Function.prototype.apply = function(ctx, arr) {
+    ctx = ctx || window;
+    ctx.fn = this;
+    let res;
+    if (!arr) {
+        res = ctx.fn();
+    } else {
+        let args = [];
+        let length = arr.length;
+        for(let i = 0; i < length; i++) {
+            args.push(`arr[${i}]`);
+        }
+        res = eval(`ctx.fn(${args})`)
+    }
+    delete ctx.fn;
+    return res
+}
+Function.prototype.bind = function(ctx) {
+    ctx = ctx || window;
+    ctx.fn = this;
+    let args = [];
+    for (let i = 1; i < arguments.length; i++) {
+        args.push(arguments[i]);
+    };
+    return function () {
+        let res;
+        for (let i = 0; i < arguments.length; i++) {
+            args.push(`arguments[${i}]`)
+        }
+        res = eval(`ctx.fn(${args})`) ;
+        delete ctx.fn;
+        return res
+    }
+}
+</script>
