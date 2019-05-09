@@ -49,6 +49,7 @@ Function.prototype.bind = function(ctx) {
     ctx = ctx || window;
     ctx.fn = this;
     let args = [];
+    // 两个函数的arguments不一致 所以这里要push值
     for (let i = 1; i < arguments.length; i++) {
         args.push(arguments[i]);
     };
@@ -57,7 +58,8 @@ Function.prototype.bind = function(ctx) {
         for (let i = 0; i < arguments.length; i++) {
             args.push(`arguments[${i}]`)
         }
-        res = eval(`ctx.fn(${args})`) ;
+        // 若fn函数内console.log(this)的话 会将fn函数打印出来
+        res = eval(`ctx.fn(${args})`);
         delete ctx.fn;
         return res
     }
