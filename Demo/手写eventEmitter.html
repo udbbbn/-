@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+// 接口参照 https://www.runoob.com/nodejs/nodejs-event.html
+    class EventEmitter {
+
+        constructor() {
+            this.eventQueue = [];
+            this.maxListeners = 10;
+        }
+        
+        on(eventName, cb) {
+            this.eventQueue.push({
+                eventName,
+                cb,
+                once: false
+            });
+            if (this.eventQueue.length > this.maxListeners) {
+                console.info(`监听器数量已经超过${this.maxListeners}个`);
+            }
+        }
+        get addListener() {
+            return this.on
+        }
+
+        once(eventName, cb) {
+            this.eventQueue.push({
+                eventName,
+                cb,
+                once: true
+            });
+        }
+
+        emit(eventName, ...args) {
+            let _eventQueue = this.eventQueue;
+            _eventQueue.map((el, index) => {
+                if (el.eventName === eventName) {
+                    el.cb(...args);
+                    el.once && _eventQueue.splice(index, 1);
+                    return true;
+                }
+            })
+        }
+
+        removeListener(eventName, cb) {
+            let _eventQueue = this.eventQueue;
+            _eventQueue.map((el, index) => {
+                if (el.eventName === eventName) {
+                    _eventQueue.splice(index, 1);
+                    return true;
+                }
+            })
+        }
+
+        removeAllListeners(eventName, cb) {
+            this.eventQueue = [];
+        }
+
+        setMaxListeners(n) {
+            try {
+                const _toString = Object.prototype.toString;
+                if (_toString.call(n) === "[object Number]") {
+                    this.maxListeners = n;
+                } else {
+                    throw new Error('类型错误');
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
+        listeners(eventName) {
+            let _eventQueue = this.eventQueue;
+            let res = [];
+            _eventQueue.map((el, index) => {
+                if (el.eventName === eventName) {
+                    res.push(el.cb)
+                }
+            })
+            return res
+        }
+    }
+
+</script>
