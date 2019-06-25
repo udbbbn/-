@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li><a href="#/">turn yellow</a></li>
+        <li><a href="#/blue">turn blue</a></li>
+        <li><a href="#/green">turn green</a></li>
+    </ul>
+    <div onclick="routeBack()">back</div>
+</body>
+</html>
+
+<script>
+class Router {
+    constructor() {
+        this.routes = {};
+        this.history = [];
+        this.currentIndex = -1;
+        this.currentUrl = '';
+        this.isBack = false;
+        window.addEventListener('load', this.listenHash.bind(this))
+        window.addEventListener('hashchange', this.listenHash.bind(this))
+    }
+
+    route(path, cb) {
+        this.routes[path] = cb || function() {};
+    }
+
+    back() {
+        this.isBack = true;
+        this.currentIndex > 0 && --this.currentIndex;
+        location.hash = `${this.history[this.currentIndex]}`;
+        this.routes[this.history[this.currentIndex]]();
+    }
+
+    listenHash() {
+        this.currentUrl = location.hash.slice(1) || '/';
+        if (!this.isBack) {
+            this.history.push(this.currentUrl);
+            this.currentIndex++;
+        } else {
+            this.isBack = false;
+        }
+        this.routes[this.currentUrl]();
+    }
+}
+
+const Route = new Router();
+Route.route('/', () => {
+    document.querySelector('body').style.backgroundColor='#fff'
+})
+Route.route('/blue', () => {
+    document.querySelector('body').style.backgroundColor='blue'
+})
+Route.route('/green', () => {
+    document.querySelector('body').style.backgroundColor='green'
+})
+routeBack = function() {
+    Route.back();
+}
+</script>
