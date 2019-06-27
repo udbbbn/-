@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>桶排序</title>
+</head>
+<body>
+    <h3>桶排序</h3>
+    <p>原理<br/>
+            桶排序顾名思义，就是准备好一些“桶”，然后将待排序的数组值一个个放入对应的“桶内”，全部元素放入”桶“后，然后展开”桶“就得到了排序完成的数组了。比如：当前需要排序的数组 [8, 3, 5, 9, 2, 3, 0, 8]，我们可以准备一个长度为10的数组，每一项的值为0，我们对需要排序的数组开始便利，当我们遇到8时，我们将newList[8]内的0，加1，改成1；然后下一个3，我们将newList[3]内的0，加1，改成1...，处理完所有元素后，将newList便利输出就得到了排序好的数组了。当然了这里只是简单的对桶排序的介绍，真正的桶排序肯定比这个复杂。</p>
+</body>
+</html>
+<script>
+    // 原例子是用数组 本例用的是对象
+    let arr = [8,9,10,69,48,34,24,858,69,488,45];
+    let newObj = {};
+    let _res = [];
+    arr.map(el => {
+        if (newObj[el]) {
+            newObj[el] += 1
+        } else {
+            newObj[el] = 1
+        }
+    });
+    for(let i in newObj) {
+        for (let j =0;j < newObj[i];j++) {
+            _res.push(+i)
+        }
+    }
+    console.log(_res)
+</script>
