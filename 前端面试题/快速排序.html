@@ -14,7 +14,7 @@
     let arr = [48,31,54,38,44,97,51,20,54,36];
     function sort(_arr) {
         if (_arr.length <= 1) return _arr
-        let middle = _arr.splice(~(_arr.length / 2), 1)[0];
+        let middle = _arr.splice(~~(_arr.length / 2), 1)[0];
         let left = [];
         let right = [];
         _arr.map(el => {
