@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>归并排序</title>
+</head>
+<body>
+    <p>归并排序 用的二分搜索算法 </p>
+</body>
+</html>
+<script>
+    let arr = [156,12,5,4,8,61,578,31,54,25,674,15];
+    function mergeSort(_arr) {
+        if (_arr.length === 1) return _arr
+        let middle = ~~(_arr.length / 2);
+        let left = _arr.slice(0, middle);
+        let right = _arr.slice(middle);
+        return _merge(mergeSort(left), mergeSort(right));
+    }
+    function _merge(arrL, arrR) {
+        let _res = [];
+        while(arrL.length && arrR.length) {
+            if (arrL[0] < arrR[0]) {
+                _res.push(arrL.shift());
+            } else {
+                _res.push(arrR.shift());
+            }
+        }
+        return _res.concat(arrL, arrR);
+    }
+    console.log(mergeSort(arr));
+</script>
